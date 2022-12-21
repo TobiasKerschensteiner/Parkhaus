@@ -13,4 +13,4 @@ def inputprice(): #Funktion zur Eingabe des Preises
 inputprice()
 
 #Anzahl der Parkplätze
-def quantitylots(): #Funktion zur Anzahl der Parkplätzelll
+def quantitylots(): #Funktion zur Anzahl der Parkplätze
