@@ -14,3 +14,5 @@ inputprice()
 
 #Anzahl der Parkplätze
 def quantitylots(): #Funktion zur Anzahl der Parkplätze
+
+
