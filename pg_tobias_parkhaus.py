@@ -26,7 +26,7 @@ for u in range (pcount):
 print(lpark)
 
 
-for i in range (60):                          #Uhrzeit
+for i in range (100):                          #Uhrzeit #While True
         time.sleep(timefactor)
         timem += 1
         if timem == 60:
@@ -40,3 +40,21 @@ for i in range (60):                          #Uhrzeit
                 timed += 1
 
 print(f"d:{timed} h:{timeh}")
+
+
+#Vormittags von Zeitx bis Zeity ist Rushhour -> mehr Autos pro Stunde
+#Nachts von Zeitn bis Zeitd kommen nur sehr bis keine Autos pro Stunde
+
+#Autos erstellen
+#erstelle Liste mit nummerx als Beschriftung und starte neu wenn Liste 100 erreicht ist
+
+for i in range (20):
+y = random.randint(0,10) #Ob Auto erstellt wird, wird ausgewürfelt
+
+if 0 == y%2:
+        al = i+1
+        car{al} =[0,0,0,0,0]
+
+print(car2)
+
+
