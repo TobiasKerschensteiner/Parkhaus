@@ -7,7 +7,7 @@ timeh = 0                                       #aktuelle h
 timem = 0                                       #aktuelle min
 timed = 1                                       #aktueller Tag
 timefactor = 1                                  #Zeitbeschleunigungsfaktor
-lpark = []
+lpark = []                                      #leere Parkplätze
 
                                                 #Parkdauer wird festgelegt
 ptime = random.randrange(0,30,1)
@@ -46,15 +46,17 @@ print(f"d:{timed} h:{timeh}")
 #Nachts von Zeitn bis Zeitd kommen nur sehr bis keine Autos pro Stunde
 
 #Autos erstellen
-#erstelle Liste mit nummerx als Beschriftung und starte neu wenn Liste 100 erreicht ist
-
 for i in range (20):
-y = random.randint(0,10) #Ob Auto erstellt wird, wird ausgewürfelt
+        y = random.randint(0,10) #Ob Auto erstellt wird, wird ausgewürfelt
 
 if 0 == y%2:
-        al = i+1
-        car{al} =[0,0,0,0,0]
+        cars = [0]                                      #Auto(Liste) wird in cars eingefügt
+        car = [0, 0, 0, 0, 0]  # 5 Parameter pro Auto
+        cars.append(car)
 
-print(car2)
+print(cars)
+print(car)
+
+
 
 
