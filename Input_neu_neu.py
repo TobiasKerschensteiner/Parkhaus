@@ -159,6 +159,7 @@ while running:
     text_surface_p = FONT.render(text_price, True, color_text)
     text_surface_v = FONT.render(text_velocity, True, color_text)
 
+    # Anpassung des Textes an das Textfeld
     screen.blit(text_surface_r, (input_rows.x+5, input_rows.y+5))
     screen.blit(text_surface_c, (input_columns.x + 5, input_columns.y + 5))
     screen.blit(text_surface_p, (input_price.x + 5, input_price.y + 5))
