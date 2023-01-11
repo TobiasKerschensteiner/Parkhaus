@@ -99,3 +99,95 @@ def Asphalt():
 
 
     return asphalt
+
+
+
+
+#Parkplatz
+l = 150
+o = 100
+ANZX = 7          #Anzahl x koordinate -> bekomme die einstell info von felix
+ANZY = 4           #Anzahl y koordinate  -> bekomme die einstell info von felix
+DISTANCEX = -2
+DISTANCEY = 100
+DISTANCEY1 = -2
+def Parkinglot(): #Parkplatz größe
+    w = 50
+    h = 100
+    return w, h
+parking = Parkinglot()
+#print(parking.center)
+def Parkingnr():
+    w, textsize = Parkinglot()
+    return textsize
+
+ANZPAR = ANZY * ANZX
+
+
+aph = Asphalt()
+print(aph)
+parklot = Rect(0, 0, 0, 0)
+textsize = Parkingnr()
+font = pygame.font.SysFont(None, 50)
+
+carnr = 27  # lückenfüller für die schaltung bekomme variable von Tobi
+
+drawText = False
+
+while True:
+#einfügen der grafiken
+    screen.fill(GREENSPACE)
+    pygame.draw.rect(screen, GRAY, asphalt)
+    pygame.draw.rect(screen, GRAY, entrace)
+    pygame.draw.rect(screen, GRAY, exit)
+    pygame.draw.rect(screen, MENUBAR, menubar)
+    pygame.draw.rect(screen, MENUBARX, menubar1)
+    pygame.draw.rect(screen, MENUBARX, menubar2)
+    pygame.draw.rect(screen, MENUBARX, menubar3)
+    pygame.draw.rect(screen, MENUBARX, menubar4)
+
+
+#Ampel
+    if carnr > ANZPAR - 1:
+        screen.blit(STOOP, STOOP_rect)
+    else:
+        screen.blit(GOO, GOO_rect)
+#Schranke
+    if carnr > ANZPAR - 1:
+        pygame.draw.rect(screen, STOP, barrier_r)
+    else:
+        pygame.draw.rect(screen, STOP, barrier)
+
+#Zeichnen Parkplätze
+    for ele in aph:
+        pygame.draw.rect(screen, WHITE, ele, 3)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+        elif event.type == MOUSEMOTION:
+            for r in aph:
+                if r.collidepoint(event.pos):
+                    if parklot != r:
+                        parklot = r
+                        drawText = False
+                    break
+
+# Anzeigen der Parkplatznummer
+        elif event.type == MOUSEBUTTONUP:
+            for num, r in enumerate(aph):
+                if r.collidepoint(event.pos):
+                    nrText = font.render(f"{num+1}", True, (0, 0, 0))
+                    textRect = nrText.get_rect()
+                    textRect.center = r.center
+
+                    drawText = True
+
+    pygame.draw.rect(screen, GO, parklot)
+    if drawText:
+        screen.blit(nrText, textRect)
+
+
+
+    pygame.display.update()
