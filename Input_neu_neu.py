@@ -1,6 +1,7 @@
 import pygame
 
 pygame.init()
+
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((400, 600))
 FONT = pygame.font.Font(None, 32)
@@ -13,21 +14,23 @@ text_velocity = ""
 
 # Variablen für Farbe
 color_text = (255, 255, 255)
+color_active = pygame.Color("white")
+color_inactive = pygame.Color("lightskyblue3")
 
-color_active_r = pygame.Color("lightskyblue3")
-color_inactive_r = ("white")
+color_active_r = color_active
+color_inactive_r = color_inactive
 color_r = color_inactive_r
 
-color_active_c = pygame.Color("lightskyblue3")
-color_inactive_c = ("white")
+color_active_c = color_active
+color_inactive_c = color_inactive
 color_c = color_inactive_c
 
-color_active_p = pygame.Color("lightskyblue3")
-color_inactive_p = ("white")
+color_active_p = color_active
+color_inactive_p = color_inactive
 color_p = color_inactive_p
 
-color_active_v = pygame.Color("lightskyblue3")
-color_inactive_v = ("white")
+color_active_v = color_active
+color_inactive_v = color_inactive
 color_v = color_inactive_v
 
 # Variablen zum Aktivieren der einzelnen Textfelder
@@ -84,8 +87,8 @@ while running:
                     text_rows += event.unicode
 
                 if event.key == pygame.K_RETURN:
-                    print(text_rows)
-                    inp_rows = text_rows # Speichert die Eingabe
+                    inp_rows = float(text_rows) # Speichert die Eingabe
+                    print(inp_rows)
                     #text_rows = "" (löscht das Textfeld)
 
         if event.type == pygame.KEYDOWN:
@@ -96,8 +99,8 @@ while running:
                     text_columns += event.unicode
 
                 if event.key == pygame.K_RETURN:
-                    print(text_columns)
-                    inp_columns = text_columns
+                    inp_columns = float(text_columns)  # Speichert die Eingabe
+                    print(inp_columns)
                     #text_columns = ""
 
         if event.type == pygame.KEYDOWN:
@@ -108,8 +111,8 @@ while running:
                     text_price += event.unicode
 
                 if event.key == pygame.K_RETURN:
-                    print(text_price)
-                    inp_price = text_price
+                    inp_price = float(text_price)  # Speichert die Eingabe
+                    print(inp_price)
                     #text_price = ""
 
         if event.type == pygame.KEYDOWN:
@@ -120,10 +123,15 @@ while running:
                     text_velocity += event.unicode
 
                 if event.key == pygame.K_RETURN:
-                    print(text_velocity)
-                    inp_velocity = text_velocity
+                    inp_velocity = float(text_velocity)  # Speichert die Eingabe
+                    print(inp_velocity)
                     #text_velocity = ""
 
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_DOWN:
+            break
+
+    # Farbe des Hintergrunds
     screen.fill((102, 179, 255))
 
     # Wechselt die Farbe des Eingabefeldes bei Berührung
@@ -172,17 +180,21 @@ while running:
     input_velocity.w = max(150, text_surface_v.get_width() + 10)
 
     # Text über den Textfeldern
-    FONT_1 = pygame.font.Font(None, 26)
+    FONT_cap = pygame.font.Font(None, 26)
 
-    text_rows_cap = FONT_1.render("Anzahl der Reihen:", True, color_text)
+    text_rows_cap = FONT_cap.render("Anzahl der Reihen:", True, color_text)
     screen.blit(text_rows_cap, (100, 75))
-    text_columns_cap = FONT_1.render("Anzahl der Spalten:", True, color_text)
+    text_columns_cap = FONT_cap.render("Anzahl der Spalten:", True, color_text)
     screen.blit(text_columns_cap, (100, 175))
-    text_price_cap = FONT_1.render("Preis pro Stunde in €:", True, color_text)
+    text_price_cap = FONT_cap.render("Preis pro Stunde in €:", True, color_text)
     screen.blit(text_price_cap, (100, 275))
-    text_velocity_cap = FONT_1.render("Geschwindigkeit der Simulation:", True, color_text)
+    text_velocity_cap = FONT_cap.render("Geschwindigkeit der Simulation:", True, color_text)
     screen.blit(text_velocity_cap, (100, 375))
 
     # Programm wird aktualisiert
     pygame.display.flip()
     clock.tick(30)
+
+
+
+
