@@ -10,7 +10,7 @@ timefactor = 0.01                               #Zeitbeschleunigungsfaktor
 maxpark = 30                                    #maximale Parkzeit
 minpark = 1                                     #minimale Parkzeit
 lpark = []                                      #leere Parkplätze
-cars = []
+cars = []                                       #Autos
 
 
 
@@ -60,7 +60,7 @@ for c in range (2000):
 
 
 
-    while q <len(cars) and cars !=[]:  # Parkdauer wird runtergezählt (für jedes Auto in liste cars)
+    while q < len(cars) and cars !=[]:  # Parkdauer wird runtergezählt (für jedes Auto in liste cars)
         codw = cars[q][4]
         codw = codw - 1
         cars[q][4] = codw
@@ -70,7 +70,6 @@ for c in range (2000):
             cars.remove(cars[q])
         q = q+1
         codw = 0
-        o = 0
     q = 0
 
 
