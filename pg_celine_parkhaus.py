@@ -71,30 +71,50 @@ h0 = 900
 b0 = 1640
 asphalt = pygame.Rect(x0, y0, b0, h0)
 
+#Parkplatz
+l = 150
+o = 100
+ANZX = 30         #Anzahl x koordinate -> bekomme die einstell info von felix
+ANZY = 1           #Anzahl y koordinate  -> bekomme die einstell info von felix
+DISTANCEX = -2
+DISTANCEY = 100
+DISTANCEY1 = -2
+ANZPAR = ANZY * ANZX #parplatz gesamt
+
+
+carnr = 27  # lückenfüller für die schaltung bekomme variable von Tobi
+
+
+
+
 #positionirung der Parkplätze
 def Asphalt():
     asphalt = []
     w, h = Parkinglot()
     if ANZY == 1:
-        for  n1 in range(ANZY):
-            y = o + n1 + (h + DISTANCEY) + 235
-            for m1 in range(ANZX):
-                x = l + m1 * (w + DISTANCEX)
+        for n in range(ANZY):
+            y = o + n + (h + DISTANCEY) + 235
+            for m in range(ANZX):
+                x = l + m * (w + DISTANCEX) + 25
                 r = Rect(x, y, w, h)
+                r.center = (x, y)
                 asphalt.append(r)
+
     if ANZY == 2:
         for n in range(ANZY):
             y = o + n * (h + DISTANCEY) + 295
             for m in range(ANZX):
-                x = l + m * (w + DISTANCEX)
+                x = l + m * (w + DISTANCEX) +25
                 r = Rect(x, y, w, h)
+                r.center = (x , y)
                 asphalt.append(r)
     if ANZY == 4 or ANZY == 3:
         for n in range(ANZY):
-            y = o + n * (h + DISTANCEY) + 80
+            y = o + n * (h + DISTANCEY) + 135
             for m in range(ANZX):
-                x = l + m * (w + DISTANCEX)
+                x = l + m * (w + DISTANCEX) + 25
                 r = Rect(x, y, w, h)
+                r.center = (x,y)
                 asphalt.append(r)
 
 
@@ -102,37 +122,50 @@ def Asphalt():
 
 
 
-
-#Parkplatz
-l = 150
-o = 100
-ANZX = 7          #Anzahl x koordinate -> bekomme die einstell info von felix
-ANZY = 4           #Anzahl y koordinate  -> bekomme die einstell info von felix
-DISTANCEX = -2
-DISTANCEY = 100
-DISTANCEY1 = -2
 def Parkinglot(): #Parkplatz größe
     w = 50
     h = 100
     return w, h
 parking = Parkinglot()
-#print(parking.center)
+
+
 def Parkingnr():
     w, textsize = Parkinglot()
     return textsize
 
-ANZPAR = ANZY * ANZX
 
 
+
+koordinate = {}
 aph = Asphalt()
-print(aph)
+for c in range(len(aph)):
+    for cd in range(1):
+        xy = [aph[c][0], aph[c][1]]
+        c = c+1
+        koordinate [c]=xy
+
+print(koordinate) #x und y koordinaten als dic mit parkplatznummer
+
+park = [2, 5, 7]
+for ue in range(len(park)):
+    parkplatz2 = park[ue]
+    #auto
+    cor = koordinate[parkplatz2]
+    xx = cor[0]
+    yy = cor[1]
+
+    print (xx,yy)
+    Auto = pygame.Rect(xx,yy, 30, 80)
+    Auto.center = (xx+25, yy+50)
+
+#print("Parkplatz 1 =",aph[0][0],",",aph[0][1])   # x und y koordinaten der prakplätze für tobi (links oben) für mitte/mitte x+25 y+50
 parklot = Rect(0, 0, 0, 0)
 textsize = Parkingnr()
 font = pygame.font.SysFont(None, 50)
 
-carnr = 27  # lückenfüller für die schaltung bekomme variable von Tobi
-
 drawText = False
+#aph = pygame.Rect(0,0,0,0)
+#aph.center = (500, 500)
 
 while True:
 #einfügen der grafiken
@@ -145,6 +178,7 @@ while True:
     pygame.draw.rect(screen, MENUBARX, menubar2)
     pygame.draw.rect(screen, MENUBARX, menubar3)
     pygame.draw.rect(screen, MENUBARX, menubar4)
+    pygame.draw.rect(screen, MENUBARX, Auto)
 
 
 #Ampel
@@ -167,26 +201,28 @@ while True:
             sys.exit()
 
         elif event.type == MOUSEMOTION:
-            for r in aph:
-                if r.collidepoint(event.pos):
-                    if parklot != r:
-                        parklot = r
+            for p in aph:
+                if p.collidepoint(event.pos):
+                    if parklot != p:
+                        parklot = p
                         drawText = False
                     break
 
 # Anzeigen der Parkplatznummer
         elif event.type == MOUSEBUTTONUP:
-            for num, r in enumerate(aph):
-                if r.collidepoint(event.pos):
+            for num, p in enumerate(aph):
+                if p.collidepoint(event.pos):
                     nrText = font.render(f"{num+1}", True, (0, 0, 0))
                     textRect = nrText.get_rect()
-                    textRect.center = r.center
+                    textRect.center = p.center
+
 
                     drawText = True
 
-    pygame.draw.rect(screen, GO, parklot)
+    #pygame.draw.rect(screen, GO, parklot) #parkplatz wird grün
     if drawText:
         screen.blit(nrText, textRect)
+
 
 
 
