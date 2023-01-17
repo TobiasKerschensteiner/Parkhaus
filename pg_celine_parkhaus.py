@@ -1,6 +1,7 @@
 import pygame
 import sys
 from pygame.locals import *
+import random
 
 pygame.init()
 
@@ -8,7 +9,7 @@ pygame.init()
 HEIGHT = 1000
 WIDTH = 1700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Parkplatz zeichnen.")
+pygame.display.set_caption("Parkplatz symulation.")
 
 #Farben
 GRAY = (130, 130, 130)
@@ -26,6 +27,7 @@ GOO_rect.center = (60, 310)
 STOOP = pygame.image.load("bilder/Ampel Rot.png")
 STOOP_rect = STOOP.get_rect()
 STOOP_rect.center = (60,310)
+
 
 
 # Einfahrt
@@ -75,14 +77,14 @@ asphalt = pygame.Rect(x0, y0, b0, h0)
 l = 150
 o = 100
 ANZX = 30         #Anzahl x koordinate -> bekomme die einstell info von felix
-ANZY = 1           #Anzahl y koordinate  -> bekomme die einstell info von felix
+ANZY = 4           #Anzahl y koordinate  -> bekomme die einstell info von felix
 DISTANCEX = -2
 DISTANCEY = 100
 DISTANCEY1 = -2
 ANZPAR = ANZY * ANZX #parplatz gesamt
 
 
-carnr = 27  # lückenfüller für die schaltung bekomme variable von Tobi
+carnr = 27  # lückenfüller für die schaltung bekomme variable von Tobi max anzahl an autos
 
 
 
@@ -146,17 +148,42 @@ for c in range(len(aph)):
 
 print(koordinate) #x und y koordinaten als dic mit parkplatznummer
 
-park = [2, 5, 7]
+
+
+park = [1, 5]
 for ue in range(len(park)):
     parkplatz2 = park[ue]
-    #auto
     cor = koordinate[parkplatz2]
-    xx = cor[0]
-    yy = cor[1]
+    # xx = cor[0]
+    # yy = cor[1]
+    kord = [koordinate[parkplatz2][0], koordinate[parkplatz2][1]]
+    print(koordinate[parkplatz2][0], koordinate[parkplatz2][1])
 
-    print (xx,yy)
-    Auto = pygame.Rect(xx,yy, 30, 80)
-    Auto.center = (xx+25, yy+50)
+
+#Bild Auto einfügen
+Car_blue = pygame.image.load("bilder/Auto/Auto blau.png")
+Car_blue_rect = Car_blue.get_rect()
+Car_blue_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
+Car_pink = pygame.image.load("bilder/Auto/Auto Pink .png")
+Car_pink_rect = Car_pink.get_rect()
+Car_pink_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
+Car_red = pygame.image.load("bilder/Auto/Auto rot.png")
+Car_red_rect = Car_red.get_rect()
+Car_red_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
+Car_green = pygame.image.load("bilder/Auto/Auto grün.png")
+Car_green_rect = Car_green.get_rect()
+Car_green_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
+Car_gray = pygame.image.load("bilder/Auto/Auto grau.png")
+Car_gray_rect = Car_gray.get_rect()
+Car_gray_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
+#random auslosung der farbe
+carrand = [Car_green, Car_red, Car_pink, Car_blue, Car_gray]
+car_rect_rand = [Car_gray_rect, Car_green_rect, Car_red_rect, Car_pink_rect, Car_blue_rect]
+car = random.choice(carrand)
+car_rect = random.choice(car_rect_rand)
+
+
+
 
 #print("Parkplatz 1 =",aph[0][0],",",aph[0][1])   # x und y koordinaten der prakplätze für tobi (links oben) für mitte/mitte x+25 y+50
 parklot = Rect(0, 0, 0, 0)
@@ -178,7 +205,10 @@ while True:
     pygame.draw.rect(screen, MENUBARX, menubar2)
     pygame.draw.rect(screen, MENUBARX, menubar3)
     pygame.draw.rect(screen, MENUBARX, menubar4)
-    pygame.draw.rect(screen, MENUBARX, Auto)
+
+    screen.blit(car, car_rect)
+
+
 
 
 #Ampel
