@@ -29,7 +29,6 @@ STOOP_rect = STOOP.get_rect()
 STOOP_rect.center = (60,310)
 
 
-
 # Einfahrt
 x1 = 0
 y1 = 85
@@ -76,7 +75,7 @@ asphalt = pygame.Rect(x0, y0, b0, h0)
 #Parkplatz
 l = 150
 o = 100
-ANZX = 30         #Anzahl x koordinate -> bekomme die einstell info von felix
+ANZX = 25         #Anzahl x koordinate -> bekomme die einstell info von felix
 ANZY = 4           #Anzahl y koordinate  -> bekomme die einstell info von felix
 DISTANCEX = -2
 DISTANCEY = 100
@@ -84,7 +83,7 @@ DISTANCEY1 = -2
 ANZPAR = ANZY * ANZX #parplatz gesamt
 
 
-carnr = 27  # lückenfüller für die schaltung bekomme variable von Tobi max anzahl an autos
+carnr = 15  # lückenfüller für die schaltung bekomme variable von Tobi max anzahl an autos
 
 
 
@@ -97,7 +96,7 @@ def Asphalt():
         for n in range(ANZY):
             y = o + n + (h + DISTANCEY) + 235
             for m in range(ANZX):
-                x = l + m * (w + DISTANCEX) + 25
+                x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
                 r.center = (x, y)
                 asphalt.append(r)
@@ -106,7 +105,7 @@ def Asphalt():
         for n in range(ANZY):
             y = o + n * (h + DISTANCEY) + 295
             for m in range(ANZX):
-                x = l + m * (w + DISTANCEX) +25
+                x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
                 r.center = (x , y)
                 asphalt.append(r)
@@ -114,7 +113,7 @@ def Asphalt():
         for n in range(ANZY):
             y = o + n * (h + DISTANCEY) + 135
             for m in range(ANZX):
-                x = l + m * (w + DISTANCEX) + 25
+                x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
                 r.center = (x,y)
                 asphalt.append(r)
@@ -136,8 +135,6 @@ def Parkingnr():
     return textsize
 
 
-
-
 koordinate = {}
 aph = Asphalt()
 for c in range(len(aph)):
@@ -150,37 +147,6 @@ print(koordinate) #x und y koordinaten als dic mit parkplatznummer
 
 
 
-park = [1, 5]
-for ue in range(len(park)):
-    parkplatz2 = park[ue]
-    cor = koordinate[parkplatz2]
-    # xx = cor[0]
-    # yy = cor[1]
-    kord = [koordinate[parkplatz2][0], koordinate[parkplatz2][1]]
-    print(koordinate[parkplatz2][0], koordinate[parkplatz2][1])
-
-
-#Bild Auto einfügen
-Car_blue = pygame.image.load("bilder/Auto/Auto blau.png")
-Car_blue_rect = Car_blue.get_rect()
-Car_blue_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
-Car_pink = pygame.image.load("bilder/Auto/Auto Pink .png")
-Car_pink_rect = Car_pink.get_rect()
-Car_pink_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
-Car_red = pygame.image.load("bilder/Auto/Auto rot.png")
-Car_red_rect = Car_red.get_rect()
-Car_red_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
-Car_green = pygame.image.load("bilder/Auto/Auto grün.png")
-Car_green_rect = Car_green.get_rect()
-Car_green_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
-Car_gray = pygame.image.load("bilder/Auto/Auto grau.png")
-Car_gray_rect = Car_gray.get_rect()
-Car_gray_rect.center = (koordinate[parkplatz2][0]+25 , koordinate[parkplatz2][1]+50)
-#random auslosung der farbe
-carrand = [Car_green, Car_red, Car_pink, Car_blue, Car_gray]
-car_rect_rand = [Car_gray_rect, Car_green_rect, Car_red_rect, Car_pink_rect, Car_blue_rect]
-car = random.choice(carrand)
-car_rect = random.choice(car_rect_rand)
 
 
 
@@ -206,8 +172,43 @@ while True:
     pygame.draw.rect(screen, MENUBARX, menubar3)
     pygame.draw.rect(screen, MENUBARX, menubar4)
 
-    screen.blit(car, car_rect)
 
+
+    park = [1, 5, 7, 100 , 50, 66, 22, 76, 30, 57, 88]
+    for ue in range(len(park)):
+        parkplatz2 = park[ue]
+        cor = koordinate[parkplatz2]
+        # xx = cor[0]
+        # yy = cor[1]
+        kord = [koordinate[parkplatz2][0], koordinate[parkplatz2][1]]
+
+        # Bild Auto einfügen
+        Car_blue = pygame.image.load("bilder/Auto/Auto blau.png")
+        Car_blue_rect = Car_blue.get_rect()
+        Car_blue_rect.center = (koordinate[parkplatz2][0] + 25, koordinate[parkplatz2][1] + 50)
+        Car_pink = pygame.image.load("bilder/Auto/Auto Pink .png")
+        Car_pink_rect = Car_pink.get_rect()
+        Car_pink_rect.center = (koordinate[parkplatz2][0] + 25, koordinate[parkplatz2][1] + 50)
+        Car_red = pygame.image.load("bilder/Auto/Auto rot.png")
+        Car_red_rect = Car_red.get_rect()
+        Car_red_rect.center = (koordinate[parkplatz2][0] + 25, koordinate[parkplatz2][1] + 50)
+        Car_green = pygame.image.load("bilder/Auto/Auto grün.png")
+        Car_green_rect = Car_green.get_rect()
+        Car_green_rect.center = (koordinate[parkplatz2][0] + 25, koordinate[parkplatz2][1] + 50)
+        Car_gray = pygame.image.load("bilder/Auto/Auto grau.png")
+        Car_gray_rect = Car_gray.get_rect()
+        Car_gray_rect.center = (koordinate[parkplatz2][0] + 25, koordinate[parkplatz2][1] + 50)
+        # random auslosung der farbe
+
+        carrand = [Car_green, Car_red, Car_pink, Car_blue, Car_gray]
+        car_rect_rand = [Car_gray_rect, Car_green_rect, Car_red_rect, Car_pink_rect, Car_blue_rect]
+
+        car = random.choice(carrand)
+        car_rect = random.choice(car_rect_rand)
+
+
+        screen.blit(car, car_rect)
+        print(koordinate[parkplatz2][0], koordinate[parkplatz2][1])
 
 
 
@@ -230,6 +231,7 @@ while True:
             pygame.quit()
             sys.exit()
 
+
         elif event.type == MOUSEMOTION:
             for p in aph:
                 if p.collidepoint(event.pos):
@@ -239,19 +241,19 @@ while True:
                     break
 
 # Anzeigen der Parkplatznummer
-        elif event.type == MOUSEBUTTONUP:
             for num, p in enumerate(aph):
                 if p.collidepoint(event.pos):
-                    nrText = font.render(f"{num+1}", True, (0, 0, 0))
+                    nrText = font.render(f"{num + 1}", True, (0, 0, 0))
                     textRect = nrText.get_rect()
                     textRect.center = p.center
-
-
                     drawText = True
 
-    #pygame.draw.rect(screen, GO, parklot) #parkplatz wird grün
     if drawText:
         screen.blit(nrText, textRect)
+
+
+    #pygame.draw.rect(screen, GO, parklot) #parkplatz wird grün
+
 
 
 
