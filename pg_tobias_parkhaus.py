@@ -6,7 +6,7 @@ pcount = 10                                     #Parkplatzanzahl
 timeh = 0                                       #aktuelle h
 timem = 0                                       #aktuelle min
 timed = 0                                       #aktueller Tag
-timefactor = 10                                  #Zeitbeschleunigungsfaktor
+inp_velocity = 1000                             #Zeitbeschleunigungsfaktor
 maxpark = 30                                    #maximale Parkzeit
 minpark = 1                                     #minimale Parkzeit
 lpark = []                                      #leere Parkplätze
@@ -26,8 +26,13 @@ def createcar (dhm,lpark,cars,carnr):
 
     ptime = random.randrange(minpark, maxpark, 1)  # Parkdauer wird festgelegt
 
-    car = [carnr, pplace, timem, timem + ptime,ptime]  # [Autonr. , parplatzNr. , Parkzeit Start, Parkzeit Ende, Dauer Parken]
+    # random auslosung der farbe
+    carrand = ["Car_green","Car_red","Car_pink","Car_blue","Car_gray"]
+    carco = random.choice(carrand)
+
+    car = [carnr, pplace, timem, timem + ptime,ptime,carco]  # [Autonr. , parplatzNr. , Parkzeit Start, Parkzeit Ende, Dauer Parken]
     cars.append(car)
+
 
     return cars,lpark
 
@@ -37,7 +42,7 @@ def clock (timefactor,dhm):
     timeh = dhm [1]
     timem = dhm [2]
 
-    time.sleep(1/timefactor)
+    time.sleep(1/inp_velocity)
     timem += 1
     if timem%60 == 0:
         timeh += 1
@@ -60,7 +65,7 @@ lpark.reverse()
 print(lpark)
 
 for c in range (2000):
-    dhm = clock(timefactor,dhm)
+    dhm = clock(inp_velocity,dhm)
 
 
 
@@ -94,6 +99,7 @@ for c in range (2000):
             lpark.append(cars[q][1])
             cars.remove(cars[q])
             print(f"hparked {hparked}")
+                                                #Umsatz wird hier berechnet
         q = q+1
         codw = 0
     q = 0
