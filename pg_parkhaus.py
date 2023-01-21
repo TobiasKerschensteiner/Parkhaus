@@ -93,15 +93,15 @@ ANZPAR = ANZY * ANZX #parplatz gesamt
 
 #Tobias Definitionszeug
 carnr = 0
-pcount = 100                                    #Parkplatzanzahl
+pcount = ANZX*ANZY                              #Parkplatzanzahl
 timeh = 0                                       #aktuelle h
 timem = 0                                       #aktuelle min
 timed = 0                                       #aktueller Tag
-inp_velocity = 10                             #Zeitbeschleunigungsfaktor
-maxpark = 300                                  #maximale Parkzeit
-minpark = 1                                     #minimale Parkzeit
+inp_velocity = 10                               #Zeitbeschleunigungsfaktor
+maxpark = 300                                   #maximale Parkzeit
+minpark = 30                                     #minimale Parkzeit
 global lpark
-lpark = []                                      #leere Parkplaetze
+lpark = []                                      #leere Parkplaetze(global)
 global cars
 cars = []                                       #aktuelle Autos(global)
 hparked = 0
@@ -177,6 +177,7 @@ def ptimecd_remvcar():
         while o < len(cars):
             if cars[o] == [0]:
                 cars.remove(cars[o])
+                o = 0-1
             o = o+1
         o = 0
 
@@ -222,7 +223,7 @@ def Parkingnr():
     w, textsize = Parkinglot()
     return textsize
 
-#GASGASGAS
+#GAS GAS GAS -------------------------------------------------------------------------------------------
 
 for o in range(pcount):  # Liste mit leeren Parkplätzen wird erstellt
     lpark.append(pcount - o)
@@ -240,7 +241,7 @@ print(koordinate) #x und y koordinaten als dic mit parkplatznummer
 
 textsize = Parkingnr()
 
-for c in range(2000):
+for c in range(20000):
     dhm = clock(inp_velocity, dhm)
 
     if len(lpark) != 0:
