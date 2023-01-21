@@ -10,14 +10,14 @@ inp_velocity = 1000                             #Zeitbeschleunigungsfaktor
 maxpark = 30                                    #maximale Parkzeit
 minpark = 1                                     #minimale Parkzeit
 global lpark
-lpark = []                                      #leere Parkplaetze (global)
+lpark = []                                      #leere Parkplaetze
 global cars
-cars = []                                       #aktuelle Autos    (global)
-pplace = 0
-dhm = [0,0,0]
+cars = []                                       #aktuelle Autos(global)
 hparked = 0
+dhm = [0, 0, 0]
 
 def createcar (dhm,lpark,carnr):
+    pplace = 0
 
     timed = dhm [0]
     timeh = dhm [1]
@@ -38,7 +38,7 @@ def createcar (dhm,lpark,carnr):
 
     return lpark
 
-def clock (timefactor,dhm):
+def clock (inp_velocity,dhm):
 
     timed = dhm [0]
     timeh = dhm [1]
@@ -48,8 +48,6 @@ def clock (timefactor,dhm):
     timem += 1
     if timem%60 == 0:
         timeh += 1
-
-    print(timem)
 
     if timem % 1440 == 0:
         timeh = 0
@@ -76,11 +74,10 @@ def ptimecd_remvcar():
                     lpark.append(cars[q][1])            #gibt Parkplatznr als leer an Liste lpark zurück
                     cars[q] = [0]
                     print(f"hparked {hparked}")
-
                                                         #Umsatz wird hier berechnet
                 codw = 0
+
         o = 0                                       #Variable zum drucharbeiten von cars
-        print(cars)
         while o < len(cars):
             if cars[o] == [0]:
                 cars.remove(cars[o])
@@ -94,13 +91,13 @@ def ptimecd_remvcar():
 for o in range (pcount):    #Liste mit leeren Parkplätzen wird erstellt
     lpark.append(pcount-o)
 lpark.reverse()
-print(lpark)
+
 
 for c in range (2000):
     dhm = clock(inp_velocity,dhm)
 
-    if len(lpark) != 0:
 
+    if len(lpark) != 0:
         probcar = random.randint(0, 100)                              # Ob Auto erstellt wird, wird ausgewürfelt
         carnr = carnr+1                                                 # AutoNr. wird hochgezählt
         #if carnr >= 9999:                                            maybe max Autonumr.
@@ -113,19 +110,18 @@ for c in range (2000):
             lpark = createcar(dhm,lpark,carnr)
 
 
-
-
-
     ptimecd_remvcar()
 
 
 
+    timed = dhm [0]
+    timeh = dhm [1]
+    timem = dhm [2]
+    print("--------------------------------------------------------")
+    print(f"d:{timed} h:{timeh} m:{timem}")
     print(cars)
     print(lpark)
     print(f"lencars: {len(cars)}")
     print(f"lpark: {len(lpark)}")
+    print("--------------------------------------------------------")
 
-    timed = dhm [0]
-    timeh = dhm [1]
-    timem = dhm [2]
-    print(f"d:{timed} h:{timeh} m:{timem}")
