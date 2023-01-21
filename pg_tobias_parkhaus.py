@@ -86,7 +86,7 @@ def ptimecd_remvcar():
 
 
 
-
+#STARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTARTSTART
 
 for o in range (pcount):    #Liste mit leeren Parkplätzen wird erstellt
     lpark.append(pcount-o)
