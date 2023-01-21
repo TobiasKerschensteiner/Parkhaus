@@ -174,6 +174,9 @@ while True:
 
 
 
+
+    pygame.draw.rect(screen, GO, parklot) #parkplatz wird grün
+
     park = [1, 5, 7, 100 , 50, 66, 22, 76, 30, 57, 88]
     for ue in range(len(park)):
         parkplatz2 = park[ue]
@@ -250,12 +253,5 @@ while True:
 
     if drawText:
         screen.blit(nrText, textRect)
-
-
-    #pygame.draw.rect(screen, GO, parklot) #parkplatz wird grün
-
-
-
-
 
     pygame.display.update()
