@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+from pygame import Rect
+
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -117,7 +119,7 @@ while running:
                 inp_velocity = [float(text_velocity)]
                 print(inp_velocity)
 
-            elif button_stop.collidepoint(event.pos):  # Startknopft leuchtet, bis Simulation beendet wird
+            elif button_stop.collidepoint(event.pos):  # Startknopf leuchtet, bis Simulation beendet wird
                 active_start = False
 
         if event.type == pygame.MOUSEBUTTONDOWN:
