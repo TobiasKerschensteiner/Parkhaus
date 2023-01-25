@@ -1,41 +1,54 @@
+#Eine Chat GTP Lösung
+
 import pygame
+import random
 
+# Initialize pygame and create window
 pygame.init()
+screen = pygame.display.set_mode((800, 600))
 
-win = pygame.display.set_mode((500, 500))
-pygame.display.set_caption("Car Move Test")
+# Create a rectangle object
+rect = pygame.Rect(0, 0, 50, 50)
 
-x = 50
-y = 50
-width = 40
-height = 60
-vel = 5
+# Target point
+target_x = random.randint(0, 750)
+target_y = random.randint(0, 550)
 
-run = True
+# Speed in pixels per frame
+speed = 1
 
-while run:
-    pygame.time.delay(20)
-
+# Main game loop
+running = True
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            running = False
 
-    keys = pygame.key.get_pressed()
+    # Move rectangle towards target point
+    if rect.x < target_x:
+        rect.x += speed
+    elif rect.x > target_x:
+        rect.x -= speed
 
-    if keys[pygame.K_LEFT]:
-        x -= vel
+    if rect.y < target_y:
+        rect.y += speed
+    elif rect.y > target_y:
+        rect.y -= speed
 
-    if keys[pygame.K_RIGHT]:
-        x += vel
+    # Check if rectangle has reached target point
+    if rect.x == target_x and rect.y == target_y:
+        target_x = random.randint(0, 750)
+        target_y = random.randint(0, 550)
 
-    if keys[pygame.K_UP]:
-        y -= vel
+    # Fill the screen with white color
+    screen.fill((255, 255, 255))
 
-    if keys[pygame.K_DOWN]:
-        y += vel
+    # Draw the rectangle
+    pygame.draw.rect(screen, (0, 0, 0), rect)
 
-    win.fill((0, 0, 0))  # Fills the screen with black
-    pygame.draw.rect(win, (255, 0, 0), (x, y, width, height))
-    pygame.display.update()
+    # Update the screen
+    pygame.display.flip()
 
+# Quit pygame
 pygame.quit()
+
