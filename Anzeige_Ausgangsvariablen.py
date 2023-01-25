@@ -26,7 +26,8 @@
     text_l_park = font_output.render(f"Freie Parkplätze: {l_park}", True, (255, 255, 255))
     screen.blit(text_l_park, (855, 25))
 
-    # Anzeige des Gruppennamens
-    text_group = font_output.render("PotatoGroup", True, (255, 255, 255))
-    screen.blit(text_group, (1275, 25))
+    # Anzeige des Umsatzes
+    sumo = 20
+    text_turnover = font_output.render(f"Umsatz: {sumo}€", True, (255, 255, 255))
+    screen.blit(text_turnover, (1275, 25))
 
