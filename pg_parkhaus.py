@@ -12,7 +12,7 @@ pygame.init()
 HEIGHT = 1000
 WIDTH = 1700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Parkplatz symulation.")
+pygame.display.set_caption("Parkplatz Simulation.")
 
 #Farben
 GRAY = (130, 130, 130)
@@ -152,7 +152,7 @@ def clock (inp_velocity,dhm):
     dhm = [timed,timeh,timem]
     return(dhm)
 
-def ptimecd_remvcar():
+def ptimecd_remvcar(inp_price):
     q = 0                               # Variable zum durcharbeiten von cars
     codw = 0                            # Hilfsvariable zum herunterzaehlen der restlichen Parkzeit
     hparked = 0                         # Stunden geparket in Stunden aufgerundet
@@ -169,7 +169,8 @@ def ptimecd_remvcar():
                     hparked = int(hparked)+1
                     lpark.append(cars[q][1])            #gibt Parkplatznr als leer an Liste lpark zurück
                     cars[q] = [0]
-                    print(f"hparked {hparked}")
+                    sum = sum + hparked*inp_price
+                    hparked = 0
                                                         #Umsatz wird hier berechnet
                 codw = 0
 
@@ -256,7 +257,7 @@ for c in range(20000):
         if 0 == probcar % 2 and timeh < 6 or timeh > 10:  # Zeit und Wahrscheinlichkeit für erstellen eines Autos wird bestimmt (Rest der Zeit)
             lpark = createcar(dhm, lpark, carnr)
 
-    ptimecd_remvcar()
+    sumo = ptimecd_remvcar(inp_price)
 
 
 #Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe
