@@ -91,7 +91,7 @@ DISTANCEY = 100
 DISTANCEY1 = -2
 ANZPAR = ANZY * ANZX #parplatz gesamt
 
-#Tobias Definitionszeug
+#Tobias Definitionen
 carnr = 0
 pcount = ANZX*ANZY                              #Parkplatzanzahl
 timeh = 0                                       #aktuelle h
@@ -107,10 +107,14 @@ cars = []                                       #aktuelle Autos(global)
 hparked = 0
 dhm = [0, 0, 0]
 
-#Celine Definitionszeug
+#Celine Definitionen
 parklot = Rect(0, 0, 0, 0)
 font = pygame.font.SysFont(None, 50)
 drawText = False
+
+#Felix Definitionen
+inp_price = 2
+sumo = 10
 
 def createcar (dhm,lpark,carnr):
     pplace = 0
@@ -152,7 +156,7 @@ def clock (inp_velocity,dhm):
     dhm = [timed,timeh,timem]
     return(dhm)
 
-def ptimecd_remvcar(inp_price):
+def ptimecd_remvcar(inp_price,sumo):
     q = 0                               # Variable zum durcharbeiten von cars
     codw = 0                            # Hilfsvariable zum herunterzaehlen der restlichen Parkzeit
     hparked = 0                         # Stunden geparket in Stunden aufgerundet
@@ -169,9 +173,9 @@ def ptimecd_remvcar(inp_price):
                     hparked = int(hparked)+1
                     lpark.append(cars[q][1])            #gibt Parkplatznr als leer an Liste lpark zurück
                     cars[q] = [0]
-                    sum = sum + hparked*inp_price
+                    sumo = sumo + (hparked*inp_price)     #Umsatz wird hier berechnet
                     hparked = 0
-                                                        #Umsatz wird hier berechnet
+
                 codw = 0
 
         o = 0                                           #Variable zum drucharbeiten von cars
@@ -242,14 +246,12 @@ print(koordinate) #x und y koordinaten als dic mit parkplatznummer
 
 textsize = Parkingnr()
 
-for c in range(20000):
+while True:
     dhm = clock(inp_velocity, dhm)
 
     if len(lpark) != 0:
         probcar = random.randint(0, 100)  # Ob Auto erstellt wird, wird ausgewürfelt
         carnr = carnr + 1  # AutoNr. wird hochgezählt
-        # if carnr >= 9999:                                            maybe max Autonumr.
-        #    carnr = 0
 
         if 0 == probcar % 2 and 6 < timeh < 10:  # Zeit und Wahrscheinlichkeit für erstellen eines Autos wird bestimmt (Vormittag)
             lpark = createcar(dhm, lpark, carnr)
@@ -257,7 +259,7 @@ for c in range(20000):
         if 0 == probcar % 2 and timeh < 6 or timeh > 10:  # Zeit und Wahrscheinlichkeit für erstellen eines Autos wird bestimmt (Rest der Zeit)
             lpark = createcar(dhm, lpark, carnr)
 
-    sumo = ptimecd_remvcar(inp_price)
+    sumo = ptimecd_remvcar(inp_price,sumo)
 
 
 #Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe
@@ -344,6 +346,33 @@ for c in range(20000):
                     textRect = nrText.get_rect()
                     textRect.center = p.center
                     drawText = True
+
+    font_output = pygame.font.Font(None, 32)
+
+    # Anzeige für Tag und Uhrzeit
+    day = dhm[0]
+    hour = dhm[1]
+    minute = dhm[2]
+
+    text_day = font_output.render(f"Tag: {day}", True, (255, 255, 255))
+    screen.blit(text_day, (10, 10))
+    text_time = font_output.render(f"Uhrzeit: {hour}:{minute}", True, (255, 255, 255))
+    screen.blit(text_time, (10, 40))
+
+    # Anzeige für die belegten Parkplätze
+
+    text_occupied = font_output.render(f"Belegte Parkplätze: {len(cars)}", True, (255, 255, 255))
+    screen.blit(text_occupied, (435, 25))
+
+    # Anzeige für die freien Parkplätze
+
+    text_l_park = font_output.render(f"Freie Parkplätze: {len(lpark)}", True, (255, 255, 255))
+    screen.blit(text_l_park, (855, 25))
+
+    # Anzeige des Umsatzes
+
+    text_turnover = font_output.render(f"Umsatz: {sumo}€", True, (255, 255, 255))
+    screen.blit(text_turnover, (1275, 25))
 
     if drawText:
         screen.blit(nrText, textRect)
