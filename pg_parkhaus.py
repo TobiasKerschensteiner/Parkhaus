@@ -185,6 +185,7 @@ def ptimecd_remvcar(inp_price,sumo):
                 o = 0-1
             o = o+1
         o = 0
+    return sumo
 
 def Asphalt():
     asphalt = []
