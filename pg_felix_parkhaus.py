@@ -110,13 +110,13 @@ while running:
             if button_start.collidepoint(event.pos):
                 active_start = True
                 # Wenn Start gedrückt wird, werden alle Werte eingegeben
-                inp_rows = [int(text_rows)]
+                inp_rows = int(text_rows)
                 print(inp_rows)
-                inp_columns = [int(text_columns)]
+                inp_columns = int(text_columns)
                 print(inp_columns)
-                inp_price = [float(text_price)]
+                inp_price = float(text_price)
                 print(inp_price)
-                inp_velocity = [float(text_velocity)]
+                inp_velocity = float(text_velocity)
                 print(inp_velocity)
 
             elif button_stop.collidepoint(event.pos):  # Startknopf leuchtet, bis Simulation beendet wird
@@ -128,7 +128,7 @@ while running:
             else:
                 active_stop = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN: # aktuell nicht verwendet
             if button_impressum.collidepoint(event.pos):
                 active_impressum = True
             else:
@@ -144,7 +144,7 @@ while running:
                     text_rows += event.unicode  # Es können nur zahlen eingegeben werden
 
                 if event.key == pygame.K_RETURN:
-                    inp_rows = [int(text_rows)] # Speichert die Eingabe
+                    inp_rows = int(text_rows) # Speichert die Eingabe
                     print(inp_rows)
                     # text_rows = "" (löscht das Textfeld)
 
@@ -157,7 +157,7 @@ while running:
                     text_columns += event.unicode
 
                 if event.key == pygame.K_RETURN:
-                    inp_columns = [int(text_columns)]
+                    inp_columns = int(text_columns)
                     print(inp_columns)
                     # text_columns = ""
 
@@ -170,7 +170,7 @@ while running:
                     text_price += event.unicode  # Es können nur Zahlen und Punkte eingegeben werden
 
                 if event.key == pygame.K_RETURN:
-                    inp_price = [float(text_price)]
+                    inp_price = float(text_price)
                     print(inp_price)
                     # text_price = ""
 
@@ -183,7 +183,7 @@ while running:
                     text_velocity += event.unicode
 
                 if event.key == pygame.K_RETURN:
-                    inp_velocity = [float(text_velocity)]
+                    inp_velocity = float(text_velocity)
                     print(inp_velocity)
                     # text_velocity = ""
 
