@@ -357,7 +357,7 @@ while True:
 
     text_day = font_output.render(f"Tag: {day}", True, (255, 255, 255))
     screen.blit(text_day, (10, 10))
-    text_time = font_output.render(f"Uhrzeit: {hour}:{minute}", True, (255, 255, 255))
+    text_time = font_output.render(f"Stunden: {hour}", True, (255, 255, 255))
     screen.blit(text_time, (10, 40))
 
     # Anzeige für die belegten Parkplätze
