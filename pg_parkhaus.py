@@ -386,7 +386,8 @@ lpark = []                                      #leere Parkplaetze(global)
 global cars
 cars = []                                       #aktuelle Autos(global)
 hparked = 0
-dhm = [0, 0, 0]
+dhm = [0, 0, 0, 0]
+
 
 #Celine Definitionen
 parklot = Rect(0, 0, 0, 0)
@@ -397,7 +398,7 @@ drawText = False
 inp_price = 2
 sumo = 0
 
-def createcar (dhm,lpark,carnr):
+def createcar (dhm,lpark,carnr,):
     pplace = 0
 
     timed = dhm [0]
@@ -424,11 +425,16 @@ def clock (inp_velocity,dhm):
     timed = dhm [0]
     timeh = dhm [1]
     timem = dhm [2]
+    scrm = dhm [3]
 
     time.sleep(1/inp_velocity)
     timem += 1
+    scrm += 1
     if timem%60 == 0:
         timeh += 1
+
+    if scrm == 60:
+        scrm == 0
 
     if timem % 1440 == 0:
         timeh = 0
@@ -510,7 +516,7 @@ def Parkingnr():
     w, textsize = Parkinglot()
     return textsize
 
-#GAS GAS GAS -------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------- Simulation Start
 
 for o in range(pcount):  # Liste mit leeren Parkplätzen wird erstellt
     lpark.append(pcount - o)
@@ -529,7 +535,7 @@ print(koordinate) #x und y koordinaten als dic mit parkplatznummer
 textsize = Parkingnr()
 
 while True:
-    dhm = clock(inp_velocity, dhm)
+    dhm = clock(inp_velocity,dhm)
 
     if len(lpark) != 0:
         probcar = random.randint(0, 100)  # Ob Auto erstellt wird, wird ausgewürfelt
@@ -634,11 +640,12 @@ while True:
     # Anzeige für Tag und Uhrzeit
     day = dhm[0]
     hour = dhm[1]
-    minute = dhm[2]
+    minute = dhm[3]
+
 
     text_day = font_output.render(f"Tag: {day}", True, (255, 255, 255))
     screen.blit(text_day, (10, 10))
-    text_time = font_output.render(f"Stunden: {hour}", True, (255, 255, 255))
+    text_time = font_output.render(f"Stunden: {hour} Minute {minute}", True, (255, 255, 255))
     screen.blit(text_time, (10, 40))
 
     # Anzeige für die belegten Parkplätze
