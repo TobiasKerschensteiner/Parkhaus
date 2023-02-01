@@ -1,59 +1,48 @@
-
 import pygame
 import sys
-
-from pygame import Rect
 
 pygame.init()
 
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((400, 600))
+screen = pygame.display.set_mode((1500, 750))
 pygame.display.set_caption("Einstellungen")
 FONT = pygame.font.Font(None, 32)
 
-# Leere Textfelder
+# Leere Textfelder (Startwerte werden vorgegeben)
 text_rows = "4"
 text_columns = "5"
 text_price = "1.5"
 text_velocity = "0.5"
 text_start = "    Start    "
 text_stop = "Beenden"
-text_impressum = "Impressum"
 
 # Variablen für Farbe
 color_text = (255, 255, 255)
 color_text_s = (0, 255, 0)
 color_text_sp = (255, 0, 0)
 color_active = pygame.Color("white")
-color_inactive = pygame.Color("lightskyblue3")
+color_inactive = (99, 138, 126)
 
 color_active_r = color_active
 color_inactive_r = color_inactive
-#color_r = color_inactive_r
 
 color_active_c = color_active
 color_inactive_c = color_inactive
-#color_c = color_inactive_c
 
 color_active_p = color_active
 color_inactive_p = color_inactive
-#color_p = color_inactive_p
 
 color_active_v = color_active
 color_inactive_v = color_inactive
-#color_v = color_inactive_v
 
 color_active_s = color_text_s
 color_inactive_s = color_inactive
-#color_s = color_inactive_s
 
 color_active_sp = color_text_sp
 color_inactive_sp = color_inactive
-#color_sp = color_inactive_sp
 
 color_active_i = color_active
 color_inactive_i = color_inactive
-#color_i = color_inactive_i
 
 # Variablen zum Aktivieren der einzelnen Textfelder
 active_rows = False
@@ -62,7 +51,6 @@ active_price = False
 active_velocity = False
 active_start = False
 active_stop = False
-active_impressum = False
 
 # Koordinaten der Eingabefelder
 input_rows = pygame.Rect(100, 100, 140, 32)
@@ -71,7 +59,6 @@ input_price = pygame.Rect(100, 300, 140, 32)
 input_velocity = pygame.Rect(100, 400, 140, 32)
 button_start = pygame.Rect(100, 475, 60, 32)
 button_stop = pygame.Rect(240, 475, 60, 32)
-button_impressum = pygame.Rect(100, 550, 60, 32)
 
 running = True
 
@@ -126,14 +113,10 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if button_stop.collidepoint(event.pos):
                 active_stop = True
+                pygame.quit()
+                sys.exit()
             else:
                 active_stop = False
-
-        if event.type == pygame.MOUSEBUTTONDOWN: # aktuell nicht verwendet
-            if button_impressum.collidepoint(event.pos):
-                active_impressum = True
-            else:
-                active_impressum = False
 
         # Tastaturerkennung und Texteingabe
         if event.type == pygame.KEYDOWN:
@@ -189,7 +172,7 @@ while running:
                     # text_velocity = ""
 
     # Farbe des Hintergrunds
-    screen.fill((102, 179, 255))
+    screen.fill((127, 154, 139))
 
     # Wechselt die Farbe des Eingabefeldes bei Aktivierung
     if active_rows:
@@ -222,11 +205,6 @@ while running:
     else:
         color_sp = color_inactive_sp
 
-    if active_impressum:
-        color_i = color_active_i
-    else:
-        color_i = color_inactive_i
-
     # Zeichnen der Eingabefelder
     pygame.draw.rect(screen, color_r, input_rows, 2)
     pygame.draw.rect(screen, color_c, input_columns, 2)
@@ -234,7 +212,6 @@ while running:
     pygame.draw.rect(screen, color_v, input_velocity, 2)
     pygame.draw.rect(screen, color_s, button_start, 2)
     pygame.draw.rect(screen, color_sp, button_stop, 2)
-    pygame.draw.rect(screen, color_i, button_impressum, 2)
 
     # Text wird "gerendert"
     text_surface_r = FONT.render(text_rows, True, color_text)
@@ -243,7 +220,6 @@ while running:
     text_surface_v = FONT.render(text_velocity, True, color_text)
     text_surface_s = FONT.render(text_start, True, color_text_s)
     text_surface_sp = FONT.render(text_stop, True, color_text_sp)
-    text_surface_i = FONT.render(text_impressum, True, color_text)
 
     # Anpassung des Textes an das Textfeld
     screen.blit(text_surface_r, (input_rows.x + 5, input_rows.y + 5))
@@ -252,7 +228,6 @@ while running:
     screen.blit(text_surface_v, (input_velocity.x + 5, input_velocity.y + 5))
     screen.blit(text_surface_s, (button_start.x + 5, button_start.y + 5))
     screen.blit(text_surface_sp, (button_stop.x + 5, button_stop.y + 5))
-    screen.blit(text_surface_i, (button_impressum.x + 5, button_impressum.y + 5))
 
     # Anpassung der Weite der Textfelder
     input_rows.w = max(150, text_surface_r.get_width() + 10)
@@ -261,7 +236,6 @@ while running:
     input_velocity.w = max(150, text_surface_v.get_width() + 10)
     button_start.w = max(60, text_surface_s.get_width() + 10)
     button_stop.w = max(60, text_surface_sp.get_width() + 10)
-    button_impressum.w = max(60, text_surface_i.get_width() + 10)
 
     # Text über den Textfeldern
     FONT_cap = pygame.font.Font(None, 26)
