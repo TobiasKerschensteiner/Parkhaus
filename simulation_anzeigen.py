@@ -137,6 +137,8 @@ while settingsrun == True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if button_stop.collidepoint(event.pos):
                 active_stop = True
+                pygame.quit()
+                sys.exit()
             else:
                 active_stop = False
 
@@ -200,7 +202,7 @@ while settingsrun == True:
                     # text_velocity = ""
 
     # Farbe des Hintergrunds
-    screen.fill((102, 179, 255))
+    screen.fill((128, 128, 255))
 
     # Wechselt die Farbe des Eingabefeldes bei Aktivierung
     if active_rows:
