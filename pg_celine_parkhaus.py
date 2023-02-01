@@ -175,15 +175,15 @@ while True:
 
 
 
-    pygame.draw.rect(screen, GO, parklot) #parkplatz wird grün
+    #pygame.draw.rect(screen, GO, parklot) #parkplatz wird grün
 
     park = [1, 5, 7, 100 , 50, 66, 22, 76, 30, 57, 88]
     for ue in range(len(park)):
         parkplatz2 = park[ue]
-        cor = koordinate[parkplatz2]
+        #cor = koordinate[parkplatz2]
         # xx = cor[0]
         # yy = cor[1]
-        kord = [koordinate[parkplatz2][0], koordinate[parkplatz2][1]]
+        #kord = [koordinate[parkplatz2][0], koordinate[parkplatz2][1]]
 
         # Bild Auto einfügen
         Car_blue = pygame.image.load("bilder/Auto/Auto blau.png")
@@ -216,12 +216,12 @@ while True:
 
 
 #Ampel
-    if carnr > ANZPAR - 1:
+    if carnr > ANZPAR - 1: #lpark von tobi
         screen.blit(STOOP, STOOP_rect)
     else:
         screen.blit(GOO, GOO_rect)
 #Schranke
-    if carnr > ANZPAR - 1:
+    if carnr > ANZPAR - 1: #lpark von tobi
         pygame.draw.rect(screen, STOP, barrier_r)
     else:
         pygame.draw.rect(screen, STOP, barrier)

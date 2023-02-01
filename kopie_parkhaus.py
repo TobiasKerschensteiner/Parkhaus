@@ -278,10 +278,10 @@ for c in range(20000):
 
     for ue in range(len(cars)):
         parkplatz2 = cars[ue][1]
-        cor = koordinate[parkplatz2]
+        #cor = koordinate[parkplatz2]
         # xx = cor[0]
         # yy = cor[1]
-        kord = [koordinate[parkplatz2][0], koordinate[parkplatz2][1]]
+        #kord = [koordinate[parkplatz2][0], koordinate[parkplatz2][1]]
 
         # Bild Auto einfügen
         Car_blue_rect = Car_blue.get_rect()
