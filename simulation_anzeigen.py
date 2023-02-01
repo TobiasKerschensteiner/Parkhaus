@@ -202,7 +202,7 @@ while settingsrun == True:
                     # text_velocity = ""
 
     # Farbe des Hintergrunds
-    screen.fill((128, 128, 255))
+    screen.fill((127, 154, 139))
 
     # Wechselt die Farbe des Eingabefeldes bei Aktivierung
     if active_rows:
