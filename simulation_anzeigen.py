@@ -278,8 +278,6 @@ while simrun == True:
 
 
 
-    pygame.draw.rect(screen, GO, parklot) #parkplatz wird grün
-
     for ue in range(len(cars)):
         parkplatz2 = cars[ue][1]
         cor = koordinate[parkplatz2]
