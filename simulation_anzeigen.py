@@ -384,7 +384,6 @@ pcount = ANZX*ANZY                              #Parkplatzanzahl
 timeh = 0                                       #aktuelle h
 timem = 0                                       #aktuelle min
 timed = 0                                       #aktueller Tag
-inp_velocity = 1000                               #Zeitbeschleunigungsfaktor
 maxpark = 300                                   #maximale Parkzeit
 minpark = 30                                     #minimale Parkzeit
 global lpark
