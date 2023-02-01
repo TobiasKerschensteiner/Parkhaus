@@ -304,7 +304,7 @@ pygame.display.set_caption("Parkplatz Simulation")
 #Farben
 GRAY = (130, 130, 130)
 GREENSPACE = (51, 112, 32)
-MENUBAR = (127, 154, 139)
+MENUBAR = (127, 154, 139 )
 MENUBARX = (99, 138, 126)
 WHITE = (255, 255, 255)
 GO = (0, 255, 0)
