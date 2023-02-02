@@ -278,9 +278,9 @@ while settingsrun == True:
     # Text über den Textfeldern
     FONT_cap = pygame.font.Font(None, 26)
 
-    text_rows_cap = FONT_cap.render("Anzahl der Reihen (max.4):", True, color_text)
+    text_rows_cap = FONT_cap.render("Anzahl der Reihen:", True, color_text)
     screen.blit(text_rows_cap, (100, 75))
-    text_columns_cap = FONT_cap.render("Anzahl der Spalten (max.25):", True, color_text)
+    text_columns_cap = FONT_cap.render("Anzahl der Spalten:", True, color_text)
     screen.blit(text_columns_cap, (100, 175))
     text_price_cap = FONT_cap.render("Preis pro Stunde in €:", True, color_text)
     screen.blit(text_price_cap, (100, 275))
