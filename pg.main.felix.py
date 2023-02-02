@@ -396,6 +396,7 @@ cars = []                                       #aktuelle Autos(global)
 hparked = 0
 dhm = [0, 0, 0]
 sumo = 0
+clocksim = pygame.time.Clock()
 
 
 #Celine Definitionszeug
@@ -425,7 +426,7 @@ def createcar (dhm,lpark,carnr):
 
     return lpark
 
-def clock (inp_velocity,dhm):
+def clock (dhm,inp_velocity):
 
     timed = dhm [0]
     timeh = dhm [1]
@@ -517,7 +518,6 @@ def Parkingnr():
     w, textsize = Parkinglot()
     return textsize
 
-#GAS GAS GAS -------------------------------------------------------------------------------------------
 
 for o in range(pcount):  # Liste mit leeren Parkplätzen wird erstellt
     lpark.append(pcount - o)
@@ -536,7 +536,7 @@ print(koordinate) #x und y koordinaten als dic mit parkplatznummer
 textsize = Parkingnr()
 
 while simrun == True:
-    dhm = clock(inp_velocity, dhm)
+    dhm = clock(dhm,inp_velocity)
 
     if len(lpark) != 0:
         probcar = random.randint(0, 100)  # Ob Auto erstellt wird, wird ausgewürfelt
