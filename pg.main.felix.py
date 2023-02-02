@@ -8,7 +8,7 @@ from pygame import Rect
 
 pygame.init()
 
-screen = pygame.display.set_mode((1700, 750))
+screen = pygame.display.set_mode((1700, 1000))
 pygame.display.set_caption("Einstellungen")
 FONT = pygame.font.Font(None, 32)
 
@@ -19,6 +19,17 @@ text_price = "1.50"
 text_velocity = "10"
 text_start = "    Start    "
 text_stop = "Beenden"
+
+# Logo / Schriftzug
+skalierung = 0
+skalierungswert = 1
+Potato = pygame.image.load("bilder/Potatologo.png")
+Potato_rect = Potato.get_rect()
+Potato_rect.center = (1150, 525)
+titel = pygame.image.load(("bilder/schriftzug.PNG"))
+name = pygame.image.load("bilder/name.PNG")
+name_rect = name.get_rect()
+name_rect.center = (1040, 755)
 
 # Variablen für Farbe
 color_text = (255, 255, 255)
@@ -247,13 +258,24 @@ while settingsrun == True:
     text_velocity_cap = FONT_cap.render("Geschwindigkeit der Simulation:", True, color_text)
     screen.blit(text_velocity_cap, (100, 375))
 
+    # Einfügen Logo / Namen
+    skalierung += skalierungswert
+
+    if skalierung > 10 or skalierung < -10:
+        skalierungswert = -skalierungswert
+
+    Potatoin = pygame.transform.scale(Potato, (500 + skalierung, 700 + skalierung))
+    screen.blit(Potatoin, Potato_rect)
+    screen.blit(titel, (20, 800))
+    screen.blit(name, name_rect)
+
     # Bildschirm wird aktualisiert
     pygame.display.flip()
 
 #-----------------------------------Ende der Einstellungen, Beginn der Simulation---------------------------------------
 
 # Ansichtsfenster
-HEIGHT = 750
+HEIGHT = 1000
 WIDTH = 1700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Parkplatz Simulation")
