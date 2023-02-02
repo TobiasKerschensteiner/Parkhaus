@@ -461,7 +461,7 @@ def Asphalt(): # Parkplaetze wird anhand von Spalten und Zeilen generiert
     w, h = Parkinglot()
     if ANZY == 1:
         for n in range(ANZY):
-            y = o + n + (h + DISTANCEY) + 235
+            y = o + n + (h + DISTANCEY) + 290
             for m in range(ANZX):
                 x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
@@ -470,7 +470,7 @@ def Asphalt(): # Parkplaetze wird anhand von Spalten und Zeilen generiert
 
     if ANZY == 2:
         for n in range(ANZY):
-            y = o + n * (h + DISTANCEY) + 295
+            y = o + n * (h + DISTANCEY) + 375
             for m in range(ANZX):
                 x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
@@ -478,7 +478,7 @@ def Asphalt(): # Parkplaetze wird anhand von Spalten und Zeilen generiert
                 asphalt.append(r)
     if ANZY == 4 or ANZY == 3:
         for n in range(ANZY):
-            y = o + n * (h + DISTANCEY) + 135
+            y = o + n * (h + DISTANCEY) + 154
             for m in range(ANZX):
                 x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
@@ -668,9 +668,9 @@ while simrun == True: #While-Schleife für Simulation
     pygame.display.update()
     clock.tick(inp_velocity)
 
-    timed = dhm [0]
-    timeh = dhm [1]
-    timem = dhm [2]
+    #timed = dhm [0]
+    #timeh = dhm [1]
+    #timem = dhm [2]
     print("--------------------------------------------------------")
     print(f"d:{timed} h:{timeh} m:{timem}")
     print(cars)
