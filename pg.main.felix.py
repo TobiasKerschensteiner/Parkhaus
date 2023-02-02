@@ -11,7 +11,7 @@ from pygame import Rect
 
 pygame.init()
 
-clock = pygame.time.Clock()
+#clock = pygame.time.Clock()
 screen = pygame.display.set_mode((1700, 750))
 pygame.display.set_caption("Einstellungen")
 FONT = pygame.font.Font(None, 32)
@@ -89,25 +89,25 @@ while settingsrun == True:
             sys.exit()
 
         # Mauserkennung der einzelnen Felder
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if input_rows.collidepoint(event.pos):
                 active_rows = True
             else:
                 active_rows = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if input_columns.collidepoint(event.pos):
                 active_columns = True
             else:
                 active_columns = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if input_price.collidepoint(event.pos):
                 active_price = True
             else:
                 active_price = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if input_velocity.collidepoint(event.pos):
                 active_velocity = True
             else:
@@ -152,8 +152,8 @@ while settingsrun == True:
             if active_rows == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_rows = text_rows[:-1]
-                elif event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5,
-                                   pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                elif event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4] \
+                        and int(text_rows + event.unicode) <= 4:
                     text_rows += event.unicode  # Es können nur zahlen eingegeben werden
 
                 if event.key == pygame.K_RETURN:
@@ -166,7 +166,8 @@ while settingsrun == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_columns = text_columns[:-1]
                 elif event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5,
-                                   pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                                   pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9] \
+                        and int(text_columns + event.unicode) <= 25:
                     text_columns += event.unicode
 
                 if event.key == pygame.K_RETURN:
@@ -179,7 +180,8 @@ while settingsrun == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_price = text_price[:-1]
                 elif event.key in [pygame.K_PERIOD, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
-                                   pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                                   pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9] \
+                        and float(text_price + event.unicode) <= 5 and len(text_price) <= 3:
                     text_price += event.unicode  # Es können nur Zahlen und Punkte eingegeben werden
 
                 if event.key == pygame.K_RETURN:
@@ -192,7 +194,8 @@ while settingsrun == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_velocity = text_velocity[:-1]
                 elif event.key in [pygame.K_PERIOD, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
-                                   pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                                   pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9] \
+                        and float(text_velocity + event.unicode) <= 20 and len(text_velocity) <= 2:
                     text_velocity += event.unicode
 
                 if event.key == pygame.K_RETURN:
@@ -289,7 +292,7 @@ while settingsrun == True:
 
     # Programm wird aktualisiert
     pygame.display.flip()
-    clock.tick(30)
+    #clock.tick(30)
 
 #----------------------------------------------------------------------------------------------------------------
 
@@ -431,7 +434,7 @@ def clock (inp_velocity,dhm):
     timeh = dhm [1]
     timem = dhm [2]
 
-    time.sleep(1/inp_velocity)
+    #time.sleep(1/inp_velocity)
     timem += 1
     if timem%60 == 0:
         timeh += 1
