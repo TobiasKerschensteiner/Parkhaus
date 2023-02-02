@@ -427,7 +427,7 @@ def clocks (dhm): #Minuten, Stunden und Tage werden erstellt/hochgezählt und in
 def ptimecd_remvcar(sumo):
     q = 0                               # Variable zum durcharbeiten von cars
     codw = 0                            # Hilfsvariable zum herunterzaehlen der restlichen Parkzeit
-    hparked = 0                         # Stunden geparket in Stunden aufgerundet
+    hparked = 0                         # Stunden geparket in Stunden aufgerundet .
     if cars !=[]:
         for q in range (len(cars)):     # Parkdauer wird runtergezählt (für jedes Auto in liste cars)
             if cars[q] != [0]:
