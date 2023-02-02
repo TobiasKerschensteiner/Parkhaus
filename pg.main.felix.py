@@ -655,9 +655,9 @@ while simrun == True: #While-Schleife für Simulation
     pygame.display.update()
     clock.tick(inp_velocity)
 
-    timed = dhm [0]
-    timeh = dhm [1]
-    timem = dhm [2]
+    #timed = dhm [0]
+    #timeh = dhm [1]
+    #timem = dhm [2]
     print("--------------------------------------------------------")
     print(f"d:{timed} h:{timeh} m:{timem}")
     print(cars)
