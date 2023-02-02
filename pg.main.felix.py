@@ -292,7 +292,7 @@ while settingsrun == True:
 
     # Programm wird aktualisiert
     pygame.display.flip()
-    #clock.tick(30)
+    ##clock.tick(30)
 
 #----------------------------------------------------------------------------------------------------------------
 
