@@ -22,7 +22,7 @@ text_stop = "Beenden"
 
 # Logo / Schriftzug
 skalierung = 0
-skalierungswert = 1
+skalierungswert = 0.2
 Potato = pygame.image.load("bilder/Potatologo.png")
 Potato_rect = Potato.get_rect()
 Potato_rect.center = (1150, 525)
@@ -456,7 +456,7 @@ def Asphalt(): # Parkplaetze wird anhand von Spalten und Zeilen generiert
     w, h = Parkinglot()
     if ANZY == 1:
         for n in range(ANZY):
-            y = o + n + (h + DISTANCEY) + 235
+            y = o + n + (h + DISTANCEY) + 290
             for m in range(ANZX):
                 x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
@@ -465,7 +465,7 @@ def Asphalt(): # Parkplaetze wird anhand von Spalten und Zeilen generiert
 
     if ANZY == 2:
         for n in range(ANZY):
-            y = o + n * (h + DISTANCEY) + 295
+            y = o + n * (h + DISTANCEY) + 375
             for m in range(ANZX):
                 x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
@@ -473,7 +473,7 @@ def Asphalt(): # Parkplaetze wird anhand von Spalten und Zeilen generiert
                 asphalt.append(r)
     if ANZY == 4 or ANZY == 3:
         for n in range(ANZY):
-            y = o + n * (h + DISTANCEY) + 135
+            y = o + n * (h + DISTANCEY) + 154
             for m in range(ANZX):
                 x = l + m * (w + DISTANCEX) + 150
                 r = Rect(x, y, w, h)
