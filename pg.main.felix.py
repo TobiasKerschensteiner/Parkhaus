@@ -5,10 +5,11 @@ import random
 import pygame
 import sys
 from pygame import Rect
+import locale
 
 pygame.init()
 
-screen = pygame.display.set_mode((1700, 1000))
+screen = pygame.display.set_mode((1700, 750))
 pygame.display.set_caption("Einstellungen")
 FONT = pygame.font.Font(None, 32)
 
@@ -22,7 +23,7 @@ text_stop = "Beenden"
 
 # Logo / Schriftzug
 skalierung = 0
-skalierungswert = 1
+skalierungswert = 0.2
 Potato = pygame.image.load("bilder/Potatologo.png")
 Potato_rect = Potato.get_rect()
 Potato_rect.center = (1150, 525)
@@ -162,6 +163,11 @@ while settingsrun == True:
             if active_price == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_price = text_price[:-1]
+
+                elif event.key == pygame.K_PERIOD: # Es kann nur maximal ein Punkt eingegeben werden
+                    if "." not in text_price:
+                        text_price += event.unicode
+
                 elif event.key in [pygame.K_PERIOD, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
                                    pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9] \
                         and float(text_price + event.unicode) <= 5 and len(text_price) <= 3:
@@ -275,7 +281,7 @@ while settingsrun == True:
 #-----------------------------------Ende der Einstellungen, Beginn der Simulation---------------------------------------
 
 # Ansichtsfenster
-HEIGHT = 1000
+HEIGHT = 750
 WIDTH = 1700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Parkplatz Simulation")
@@ -339,10 +345,10 @@ b6 = 5
 menubar2 = pygame.Rect(x6, y6, b6, h6)
 menubar3 = pygame.Rect(x6+421, y6, b6, h6)
 menubar4 = pygame.Rect(x6+842, y6, b6, h6)
-menubar5 = pygame.Rect(x6+1042, y6, b6, h6)
+menubar5 = pygame.Rect(x6+1092, y6, b6, h6)
 
 # Beendet die Simulation (Beenden-Knopf)
-button_stop_main = pygame.Rect(1530, 20, 100, 32)
+button_stop_main = pygame.Rect(1555, 20, 100, 32)
 text_stop_main = "Beenden"
 
 # Koordinaten Asphalt
@@ -409,15 +415,14 @@ def clocks (dhm): #Minuten, Stunden und Tage werden erstellt/hochgezählt und in
     timem = dhm [2]
 
     timem += 1
-    if timem%60 == 0: #Minuten
-        timeh += 1
-
-    if timem % 1440 == 0: #Stunden
+    timeh += timem // 60
+    timem = timem % 60
+    if timeh >= 24:
         timeh = 0
-        timed += 1        #Tage
+        timed += 1
 
-    dhm = [timed,timeh,timem]
-    return(dhm)
+    dhm = [timed, timeh, timem]
+    return (dhm)
 
 def ptimecd_remvcar(sumo):
     q = 0                               # Variable zum durcharbeiten von cars
@@ -624,11 +629,18 @@ while simrun == True: #While-Schleife für Simulation
     # Anzeige für Tag und Uhrzeit
     day = dhm[0]
     hour = dhm[1]
+    minute = dhm[2]
 
+    if hour < 10:
+        hour = "0" + str(hour)
+    if minute < 10:
+        minute = "0" + str(minute)
+    if day < 10:
+        day = "0" + str(day)
 
     text_day = font_output.render(f"Tag: {day}", True, (255, 255, 255))
     screen.blit(text_day, (10, 10))
-    text_time = font_output.render(f"Stunden: {hour}", True, (255, 255, 255))
+    text_time = font_output.render(f"Uhrzeit: {hour} : {minute} Uhr", True, (255, 255, 255))
     screen.blit(text_time, (10, 40))
 
     # Anzeige für die belegten Parkplätze
@@ -643,7 +655,8 @@ while simrun == True: #While-Schleife für Simulation
 
     # Anzeige des Umsatzes
 
-    text_turnover = font_output.render(f"Umsatz: {sumo}€", True, (255, 255, 255))
+    locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
+    text_turnover = font_output.render(f"Umsatz: {locale.currency(sumo, grouping=True)}", True, (255, 255, 255))
     screen.blit(text_turnover, (1275, 25))
 
     if drawText:
