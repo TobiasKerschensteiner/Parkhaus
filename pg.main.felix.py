@@ -12,15 +12,15 @@ from pygame import Rect
 pygame.init()
 
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((1700, 750))
+screen = pygame.display.set_mode((1700, 1000))
 pygame.display.set_caption("Einstellungen")
 FONT = pygame.font.Font(None, 32)
 
 # Leere Textfelder
 text_rows = "4"
-text_columns = "5"
+text_columns = "25"
 text_price = "1.5"
-text_velocity = "0.5"
+text_velocity = "10"
 text_start = "    Start    "
 text_stop = "Beenden"
 #text_impressum = "Impressum"
@@ -89,25 +89,25 @@ while settingsrun == True:
             sys.exit()
 
         # Mauserkennung der einzelnen Felder
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if input_rows.collidepoint(event.pos):
                 active_rows = True
             else:
                 active_rows = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if input_columns.collidepoint(event.pos):
                 active_columns = True
             else:
                 active_columns = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if input_price.collidepoint(event.pos):
                 active_price = True
             else:
                 active_price = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEMOTION:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if input_velocity.collidepoint(event.pos):
                 active_velocity = True
             else:
@@ -278,9 +278,9 @@ while settingsrun == True:
     # Text über den Textfeldern
     FONT_cap = pygame.font.Font(None, 26)
 
-    text_rows_cap = FONT_cap.render("Anzahl der Reihen:", True, color_text)
+    text_rows_cap = FONT_cap.render("Anzahl der Reihen (max.4):", True, color_text)
     screen.blit(text_rows_cap, (100, 75))
-    text_columns_cap = FONT_cap.render("Anzahl der Spalten:", True, color_text)
+    text_columns_cap = FONT_cap.render("Anzahl der Spalten (max.25):", True, color_text)
     screen.blit(text_columns_cap, (100, 175))
     text_price_cap = FONT_cap.render("Preis pro Stunde in €:", True, color_text)
     screen.blit(text_price_cap, (100, 275))
@@ -295,7 +295,7 @@ while settingsrun == True:
 
 
 #Ansichtsfenster
-HEIGHT = 750
+HEIGHT = 1000
 WIDTH = 1700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Parkplatz Simulation")
