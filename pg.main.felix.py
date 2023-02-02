@@ -2,64 +2,49 @@
 
 from pygame.locals import *
 import random
-import time
-
 import pygame
 import sys
-
 from pygame import Rect
 
 pygame.init()
 
-#clock = pygame.time.Clock()
 screen = pygame.display.set_mode((1700, 750))
 pygame.display.set_caption("Einstellungen")
 FONT = pygame.font.Font(None, 32)
 
 # Leere Textfelder
 text_rows = "4"
-text_columns = "5"
-text_price = "1.5"
-text_velocity = "0.5"
+text_columns = "25"
+text_price = "1.50"
+text_velocity = "10"
 text_start = "    Start    "
 text_stop = "Beenden"
-#text_impressum = "Impressum"
 
 # Variablen für Farbe
 color_text = (255, 255, 255)
 color_text_s = (0, 255, 0)
 color_text_sp = (255, 0, 0)
 color_active = pygame.Color("white")
-#color_inactive = pygame.Color("lightskyblue3")
 color_inactive = (99, 138, 126)
 
+# Farbzuordnung für die Ränder der Knöpfe
 color_active_r = color_active
 color_inactive_r = color_inactive
-#color_r = color_inactive_r
 
 color_active_c = color_active
 color_inactive_c = color_inactive
-#color_c = color_inactive_c
 
 color_active_p = color_active
 color_inactive_p = color_inactive
-#color_p = color_inactive_p
 
 color_active_v = color_active
 color_inactive_v = color_inactive
-#color_v = color_inactive_v
 
 color_active_s = color_text_s
 color_inactive_s = color_inactive
-#color_s = color_inactive_s
 
 color_active_sp = color_text_sp
 color_inactive_sp = color_inactive
-#color_sp = color_inactive_sp
-
-#color_active_i = color_active
-#color_inactive_i = color_inactive
-#color_i = color_inactive_i
 
 # Variablen zum Aktivieren der einzelnen Textfelder
 active_rows = False
@@ -68,7 +53,6 @@ active_price = False
 active_velocity = False
 active_start = False
 active_stop = False
-#active_impressum = False
 
 # Koordinaten der Eingabefelder
 input_rows = pygame.Rect(100, 100, 140, 32)
@@ -77,8 +61,8 @@ input_price = pygame.Rect(100, 300, 140, 32)
 input_velocity = pygame.Rect(100, 400, 140, 32)
 button_start = pygame.Rect(100, 475, 60, 32)
 button_stop = pygame.Rect(240, 475, 60, 32)
-#button_impressum = pygame.Rect(100, 550, 60, 32)
 
+# Belegung der Startbedingungen der While-Schleifen (Einstellungen, Simulation)
 settingsrun = True
 simrun = True
 
@@ -129,11 +113,7 @@ while settingsrun == True:
                 settingsrun = False
                 simrun = True
 
-
-            elif button_stop.collidepoint(event.pos):  # Startknopf leuchtet, bis Simulation beendet wird
-                active_start = False
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN: # Beendet die Simulation (Beenden-Knopf)
             if button_stop.collidepoint(event.pos):
                 active_stop = True
                 pygame.quit()
@@ -141,67 +121,57 @@ while settingsrun == True:
             else:
                 active_stop = False
 
-        #if event.type == pygame.MOUSEBUTTONDOWN: # aktuell nicht verwendet
-            #if button_impressum.collidepoint(event.pos):
-                #active_impressum = True
-            #else:
-                #active_impressum = False
-
         # Tastaturerkennung und Texteingabe
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN: # Eingabe der Reihen
             if active_rows == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_rows = text_rows[:-1]
                 elif event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4] \
                         and int(text_rows + event.unicode) <= 4:
-                    text_rows += event.unicode  # Es können nur zahlen eingegeben werden
+                    text_rows += event.unicode  # Es können nur Werte bis 4 eingegeben werden
 
                 if event.key == pygame.K_RETURN:
                     inp_rows = int(text_rows) # Speichert die Eingabe
                     print(inp_rows)
-                    # text_rows = "" (löscht das Textfeld)
 
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN: # Eingabe der Spalten
             if active_columns == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_columns = text_columns[:-1]
                 elif event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5,
                                    pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9] \
                         and int(text_columns + event.unicode) <= 25:
-                    text_columns += event.unicode
+                    text_columns += event.unicode # Es können nur Werte bis 25 eingegeben werden
 
                 if event.key == pygame.K_RETURN:
                     inp_columns = int(text_columns)
                     print(inp_columns)
-                    # text_columns = ""
 
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN: # Eingabe des Preises
             if active_price == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_price = text_price[:-1]
                 elif event.key in [pygame.K_PERIOD, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
                                    pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9] \
                         and float(text_price + event.unicode) <= 5 and len(text_price) <= 3:
-                    text_price += event.unicode  # Es können nur Zahlen und Punkte eingegeben werden
+                    text_price += event.unicode  # Es können nur Werte bis 5.00 eingegeben werden
 
                 if event.key == pygame.K_RETURN:
                     inp_price = float(text_price)
                     print(inp_price)
-                    # text_price = ""
 
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN: # Eingabe der Geschwindigkeit der Simulation
             if active_velocity == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_velocity = text_velocity[:-1]
-                elif event.key in [pygame.K_PERIOD, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
+                elif event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
                                    pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9] \
-                        and float(text_velocity + event.unicode) <= 20 and len(text_velocity) <= 2:
-                    text_velocity += event.unicode
+                        and int(text_velocity + event.unicode) <= 100 and len(text_velocity) <= 3:
+                    text_velocity += event.unicode # Es können nur Werte bis 100 eingegeben werden
 
                 if event.key == pygame.K_RETURN:
-                    inp_velocity = float(text_velocity)
+                    inp_velocity = int(text_velocity)
                     print(inp_velocity)
-                    # text_velocity = ""
 
     # Farbe des Hintergrunds
     screen.fill((127, 154, 139))
@@ -237,11 +207,6 @@ while settingsrun == True:
     else:
         color_sp = color_inactive_sp
 
-    #if active_impressum:
-        #color_i = color_active_i
-    #else:
-        #color_i = color_inactive_i
-
     # Zeichnen der Eingabefelder
     pygame.draw.rect(screen, color_r, input_rows, 2)
     pygame.draw.rect(screen, color_c, input_columns, 2)
@@ -249,7 +214,6 @@ while settingsrun == True:
     pygame.draw.rect(screen, color_v, input_velocity, 2)
     pygame.draw.rect(screen, color_s, button_start, 2)
     pygame.draw.rect(screen, color_sp, button_stop, 2)
-    #pygame.draw.rect(screen, color_i, button_impressum, 2)
 
     # Text wird "gerendert"
     text_surface_r = FONT.render(text_rows, True, color_text)
@@ -258,7 +222,6 @@ while settingsrun == True:
     text_surface_v = FONT.render(text_velocity, True, color_text)
     text_surface_s = FONT.render(text_start, True, color_text_s)
     text_surface_sp = FONT.render(text_stop, True, color_text_sp)
-    #text_surface_i = FONT.render(text_impressum, True, color_text)
 
     # Anpassung des Textes an das Textfeld
     screen.blit(text_surface_r, (input_rows.x + 5, input_rows.y + 5))
@@ -267,16 +230,10 @@ while settingsrun == True:
     screen.blit(text_surface_v, (input_velocity.x + 5, input_velocity.y + 5))
     screen.blit(text_surface_s, (button_start.x + 5, button_start.y + 5))
     screen.blit(text_surface_sp, (button_stop.x + 5, button_stop.y + 5))
-    #screen.blit(text_surface_i, (button_impressum.x + 5, button_impressum.y + 5))
 
     # Anpassung der Weite der Textfelder
-    input_rows.w = max(150, text_surface_r.get_width() + 10)
-    input_columns.w = max(150, text_surface_c.get_width() + 10)
-    input_price.w = max(150, text_surface_p.get_width() + 10)
-    input_velocity.w = max(150, text_surface_v.get_width() + 10)
     button_start.w = max(60, text_surface_s.get_width() + 10)
     button_stop.w = max(60, text_surface_sp.get_width() + 10)
-    #button_impressum.w = max(60, text_surface_i.get_width() + 10)
 
     # Text über den Textfeldern
     FONT_cap = pygame.font.Font(None, 26)
@@ -290,20 +247,18 @@ while settingsrun == True:
     text_velocity_cap = FONT_cap.render("Geschwindigkeit der Simulation:", True, color_text)
     screen.blit(text_velocity_cap, (100, 375))
 
-    # Programm wird aktualisiert
+    # Bildschirm wird aktualisiert
     pygame.display.flip()
-    ##clock.tick(30)
 
-#----------------------------------------------------------------------------------------------------------------
+#-----------------------------------Ende der Einstellungen, Beginn der Simulation---------------------------------------
 
-
-#Ansichtsfenster
+# Ansichtsfenster
 HEIGHT = 750
 WIDTH = 1700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Parkplatz Simulation")
 
-#Farben
+# Farben
 GRAY = (130, 130, 130)
 GREENSPACE = (51, 112, 32)
 MENUBAR = (127, 154, 139 )
@@ -312,13 +267,14 @@ WHITE = (255, 255, 255)
 GO = (0, 255, 0)
 STOP = (255, 0, 0)
 
+# Bildern werden Variablen zugewiesen
 Car_gray = pygame.image.load("bilder/Auto/Auto grau.png")
 Car_green = pygame.image.load("bilder/Auto/Auto grün.png")
 Car_red = pygame.image.load("bilder/Auto/Auto rot.png")
 Car_pink = pygame.image.load("bilder/Auto/Auto Pink .png")
 Car_blue = pygame.image.load("bilder/Auto/Auto blau.png")
 
-#Bild Ampel einfügen
+# Bild der Ampel einfügen
 GOO = pygame.image.load("bilder/Ampel Gruen.png")
 GOO_rect = GOO.get_rect()
 GOO_rect.center = (60, 310)
@@ -327,23 +283,23 @@ STOOP_rect = STOOP.get_rect()
 STOOP_rect.center = (60,310)
 
 
-# Einfahrt
+# Koordinaten Einfahrt
 x1 = 0
 y1 = 85
 h1 = 80
 b1 = 100
 entrace = pygame.Rect(x1, y1, b1, h1)
 
-# Ausfahrt
+# Koordiaten Ausfahrt
 x2 = 0
 y2 = 905
 exit = pygame.Rect(x2, y2, b1, h1)
 
-#schranke
+# Schranke
 barrier = pygame.Rect(25, 170, 5, 5)
 barrier_r = pygame.Rect(25, 80, 5, 95)
 
-#Menüleiste (platzhalter)
+# Menüleiste
 x4 = 0
 y4 = 0
 h4 = 70
@@ -363,50 +319,47 @@ menubar3 = pygame.Rect(x6+421, y6, b6, h6)
 menubar4 = pygame.Rect(x6+842, y6, b6, h6)
 menubar5 = pygame.Rect(x6+1042, y6, b6, h6)
 
+# Beendet die Simulation (Beenden-Knopf)
 button_stop_main = pygame.Rect(1530, 20, 100, 32)
 text_stop_main = "Beenden"
 
-#Asphalt
+# Koordinaten Asphalt
 x0 = 50
 y0 = 85
 h0 = 900
 b0 = 1640
 asphalt = pygame.Rect(x0, y0, b0, h0)
 
-#Parkplatz
+# Koordinaten Parkplatz
 l = 150
 o = 100
-ANZX = inp_columns      #Anzahl x koordinate -> bekomme die einstell info von felix
-ANZY = inp_rows           #Anzahl y koordinate  -> bekomme die einstell info von felix
+ANZX = inp_columns      # Anzahl x koordinate -> bekomme die einstell info von felix
+ANZY = inp_rows           # Anzahl y koordinate  -> bekomme die einstell info von felix
 DISTANCEX = -2
 DISTANCEY = 100
 DISTANCEY1 = -2
-ANZPAR = ANZY * ANZX #parplatz gesamt
 
-#Tobias Definitionszeug
+# Vorbelegung der Variablen und Listen
 carnr = 0
-pcount = ANZX*ANZY                              #Parkplatzanzahl
-timeh = 0                                       #aktuelle h
-timem = 0                                       #aktuelle min
-timed = 0                                       #aktueller Tag
-inp_velocity = 1000                               #Zeitbeschleunigungsfaktor
-maxpark = 300                                   #maximale Parkzeit
-minpark = 30                                     #minimale Parkzeit
+pcount = ANZX*ANZY                              # Parkplatzanzahl
+timeh = 0                                       # aktuelle h
+timem = 0                                       # aktuelle min
+timed = 0                                       # aktueller Tag
+maxpark = 300                                   # maximale Parkzeit
+minpark = 30                                     # minimale Parkzeit
 global lpark
-lpark = []                                      #leere Parkplaetze(global)
+lpark = []                                      # leere Parkplaetze(global)
 global cars
-cars = []                                       #aktuelle Autos(global)
+cars = []                                       # aktuelle Autos(global)
 hparked = 0
 dhm = [0, 0, 0]
 sumo = 0
 
-
-#Celine Definitionszeug
 parklot = Rect(0, 0, 0, 0)
 font = pygame.font.SysFont(None, 50)
 drawText = False
 
-def createcar (dhm,lpark,carnr):
+def createcar (dhm,lpark,carnr): # Liste für individuelle Autos wird erstellt und zu Liste "cars" hinzugefügt
     pplace = 0
 
     timed = dhm [0]
@@ -418,23 +371,21 @@ def createcar (dhm,lpark,carnr):
 
     ptime = random.randrange(minpark, maxpark, 1)  # Parkdauer wird festgelegt
 
-    # random auslosung der farbe
-    carrand = [Car_green,Car_red,Car_pink,Car_blue,Car_gray]
+    carrand = [Car_green,Car_red,Car_pink,Car_blue,Car_gray] # zufällige Auslosung der Farbe
     carco = random.choice(carrand)
 
-    car = [carnr, pplace, timem, timem + ptime,ptime,carco]  # [Autonr. , parplatzNr. , Parkzeit Start, Parkzeit Ende, Dauer Parken Rest, Autofarbe]
+    # [Autonr. , parplatzNr. , Parkzeit Start, Parkzeit Ende, Dauer Parken Rest, Autofarbe]
+    car = [carnr, pplace, timem, timem + ptime,ptime,carco]
     cars.append(car)
-
 
     return lpark
 
-def clock (inp_velocity,dhm):
+def clocks (dhm):
 
     timed = dhm [0]
     timeh = dhm [1]
     timem = dhm [2]
 
-    #time.sleep(1/inp_velocity)
     timem += 1
     if timem%60 == 0:
         timeh += 1
@@ -461,15 +412,15 @@ def ptimecd_remvcar(sumo):
                     hparked = cars[q][3] - cars[q][2]
                     hparked = hparked/60
                     hparked = int(hparked)+1
-                    lpark.append(cars[q][1])            #gibt Parkplatznr als leer an Liste lpark zurück
+                    lpark.append(cars[q][1])            # gibt Parkplatznr als leer an Liste lpark zurück
                     cars[q] = [0]
-                    sumo = sumo + (hparked*inp_price)     #Umsatz wird hier berechnet
+                    sumo = sumo + (hparked*inp_price)     # Umsatz wird hier berechnet
                     hparked = 0
 
                 codw = 0
 
-        o = 0                                           #Variable zum drucharbeiten von cars
-        while o < len(cars):                            #Listen mit 0 (in diesem Druchlauf ausgeparkte Autos entfernt)
+        o = 0                                           # Variable zum drucharbeiten von cars
+        while o < len(cars):                            # Listen mit 0 (in diesem Druchlauf ausgeparkte Autos entfernt)
             if cars[o] == [0]:
                 cars.remove(cars[o])
                 o = 0-1
@@ -509,7 +460,7 @@ def Asphalt():
 
     return asphalt
 
-def Parkinglot():  # Parkplatz größe
+def Parkinglot():  # Parkplatzgröße
     w = 50
     h = 100
     return w, h
@@ -538,8 +489,11 @@ print(koordinate) #x und y koordinaten als dic mit parkplatznummer
 
 textsize = Parkingnr()
 
+clock = pygame.time.Clock()
+
 while simrun == True:
-    dhm = clock(inp_velocity, dhm)
+    #fps = time_factor(inp_velocity)
+    dhm = clocks(dhm)
 
     if len(lpark) != 0:
         probcar = random.randint(0, 100)  # Ob Auto erstellt wird, wird ausgewürfelt
@@ -680,6 +634,7 @@ while simrun == True:
         screen.blit(nrText, textRect)
 
     pygame.display.update()
+    clock.tick(inp_velocity)
 
     timed = dhm [0]
     timeh = dhm [1]
