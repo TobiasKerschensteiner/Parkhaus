@@ -333,8 +333,8 @@ asphalt = pygame.Rect(x0, y0, b0, h0)
 # Koordinaten Parkplatz
 l = 150
 o = 100
-ANZX = inp_columns      # Anzahl x koordinate -> bekomme die einstell info von felix
-ANZY = inp_rows           # Anzahl y koordinate  -> bekomme die einstell info von felix
+ANZX = inp_columns
+ANZY = inp_rows
 DISTANCEX = -2
 DISTANCEY = 100
 DISTANCEY1 = -2
@@ -380,19 +380,19 @@ def createcar (dhm,lpark,carnr): # Liste für individuelle Autos wird erstellt u
 
     return lpark
 
-def clocks (dhm):
+def clocks (dhm): #Minuten, Stunden und Tage werden erstellt/hochgezählt und in Liste "dhm" verpackt
 
     timed = dhm [0]
     timeh = dhm [1]
     timem = dhm [2]
 
     timem += 1
-    if timem%60 == 0:
+    if timem%60 == 0: #Minuten
         timeh += 1
 
-    if timem % 1440 == 0:
+    if timem % 1440 == 0: #Stunden
         timeh = 0
-        timed += 1
+        timed += 1        #Tage
 
     dhm = [timed,timeh,timem]
     return(dhm)
@@ -414,13 +414,13 @@ def ptimecd_remvcar(sumo):
                     hparked = int(hparked)+1
                     lpark.append(cars[q][1])            # gibt Parkplatznr als leer an Liste lpark zurück
                     cars[q] = [0]
-                    sumo = sumo + (hparked*inp_price)     # Umsatz wird hier berechnet
+                    sumo = sumo + (hparked*inp_price)   # Umsatz wird hier berechnet
                     hparked = 0
 
                 codw = 0
 
         o = 0                                           # Variable zum drucharbeiten von cars
-        while o < len(cars):                            # Listen mit 0 (in diesem Druchlauf ausgeparkte Autos entfernt)
+        while o < len(cars):                            # Listen mit 0 (in diesem Druchlauf ausgeparkte Autos) entfernt
             if cars[o] == [0]:
                 cars.remove(cars[o])
                 o = 0-1
@@ -429,7 +429,7 @@ def ptimecd_remvcar(sumo):
 
     return sumo
 
-def Asphalt():
+def Asphalt(): # Parkplaetze wird anhand von Spalten und Zeilen generiert
     asphalt = []
     w, h = Parkinglot()
     if ANZY == 1:
@@ -471,13 +471,12 @@ def Parkingnr():
     w, textsize = Parkinglot()
     return textsize
 
-#GAS GAS GAS -------------------------------------------------------------------------------------------
 
 for o in range(pcount):  # Liste mit leeren Parkplätzen wird erstellt
     lpark.append(pcount - o)
 lpark.reverse()
 
-koordinate = {}
+koordinate = {} # Parkplatzkoordinaten werden den Parkplätzen zugeordnet
 aph = Asphalt()
 for c in range(len(aph)):
     for cd in range(1):
@@ -485,32 +484,32 @@ for c in range(len(aph)):
         c = c+1
         koordinate [c]=xy
 
-print(koordinate) #x und y koordinaten als dic mit parkplatznummer
+print(koordinate) #x und y koordinaten als Dictionary mit Parkplatznummer:Koordinaten
 
 textsize = Parkingnr()
 
 clock = pygame.time.Clock()
 
-while simrun == True:
-    #fps = time_factor(inp_velocity)
+while simrun == True: #While-Schleife für Simulation
     dhm = clocks(dhm)
 
     if len(lpark) != 0:
         probcar = random.randint(0, 100)  # Ob Auto erstellt wird, wird ausgewürfelt
         carnr = carnr + 1  # AutoNr. wird hochgezählt
 
-        if 0 == probcar % 1 and 6 < timeh < 10:  # Zeit und Wahrscheinlichkeit für erstellen eines Autos wird bestimmt (Vormittag)
+        # Zeit und Wahrscheinlichkeit für erstellen eines Autos wird bestimmt (Vormittag)
+        if 0 == probcar % 1 and 6 < timeh < 10:
             lpark = createcar(dhm, lpark, carnr)
 
-        elif 0 == probcar % 5:  # Zeit und Wahrscheinlichkeit für erstellen eines Autos wird bestimmt (Rest des Tages
+        # Zeit und Wahrscheinlichkeit für erstellen eines Autos wird bestimmt (Rest des Tages)
+        elif 0 == probcar % 5:
             lpark = createcar(dhm, lpark, carnr)
 
-    sumo = ptimecd_remvcar(sumo)
+    sumo = ptimecd_remvcar(sumo) # Umsatzsumme wird berechnet
 
 
-#Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe Ausgabe
 
-    screen.fill(GREENSPACE)
+    screen.fill(GREENSPACE) # Zeichnen von Simulationsbildschirm
     pygame.draw.rect(screen, GRAY, asphalt)
     pygame.draw.rect(screen, GRAY, entrace)
     pygame.draw.rect(screen, GRAY, exit)
@@ -530,11 +529,9 @@ while simrun == True:
     for ue in range(len(cars)):
         parkplatz2 = cars[ue][1]
         cor = koordinate[parkplatz2]
-        # xx = cor[0]
-        # yy = cor[1]
         kord = [koordinate[parkplatz2][0], koordinate[parkplatz2][1]]
 
-        # Bild Auto einfügen
+        # Auto Bild wird eingefügt und ausgerichtet
         Car_blue_rect = Car_blue.get_rect()
         Car_blue_rect.center = (koordinate[parkplatz2][0] + 25, koordinate[parkplatz2][1] + 50)
         Car_pink_rect = Car_pink.get_rect()
@@ -545,8 +542,8 @@ while simrun == True:
         Car_green_rect.center = (koordinate[parkplatz2][0] + 25, koordinate[parkplatz2][1] + 50)
         Car_gray_rect = Car_gray.get_rect()
         Car_gray_rect.center = (koordinate[parkplatz2][0] + 25, koordinate[parkplatz2][1] + 50)
-        # random auslosung der farbe
 
+        # zufällige Auslosung der farbe
         carrand = [Car_green, Car_red, Car_pink, Car_blue, Car_gray]
         car_rect_rand = [Car_gray_rect, Car_green_rect, Car_red_rect, Car_pink_rect, Car_blue_rect]
 
