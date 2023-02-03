@@ -5,6 +5,7 @@ import random
 import pygame
 import sys
 from pygame import Rect
+import locale
 
 pygame.init()
 
@@ -114,9 +115,13 @@ while settingsrun == True:
                 active_start = True
                 # Wenn Start gedrückt wird, werden alle Werte eingegeben
                 inp_rows = int(text_rows)
+
                 inp_columns = int(text_columns)
+
                 inp_price = float(text_price)
+
                 inp_velocity = float(text_velocity)
+
                 settingsrun = False
                 simrun = True
 
@@ -156,6 +161,11 @@ while settingsrun == True:
             if active_price == True:
                 if event.key == pygame.K_BACKSPACE:
                     text_price = text_price[:-1]
+
+                elif event.key == pygame.K_PERIOD: # Es kann nur maximal ein Punkt eingegeben werden
+                    if "." not in text_price:
+                        text_price += event.unicode
+
                 elif event.key in [pygame.K_PERIOD, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
                                    pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9] \
                         and float(text_price + event.unicode) <= 5 and len(text_price) <= 3:
@@ -331,10 +341,10 @@ b6 = 5
 menubar2 = pygame.Rect(x6, y6, b6, h6)
 menubar3 = pygame.Rect(x6+421, y6, b6, h6)
 menubar4 = pygame.Rect(x6+842, y6, b6, h6)
-menubar5 = pygame.Rect(x6+1042, y6, b6, h6)
+menubar5 = pygame.Rect(x6+1092, y6, b6, h6)
 
 # Beendet die Simulation (Beenden-Knopf)
-button_stop_main = pygame.Rect(1530, 20, 100, 32)
+button_stop_main = pygame.Rect(1555, 20, 100, 32)
 text_stop_main = "Beenden"
 
 # Koordinaten Asphalt
@@ -388,8 +398,8 @@ def createcar (dhm,lpark,carnr): # Liste für individuelle Autos wird erstellt u
     carrand = [Car_green,Car_red,Car_pink,Car_blue,Car_gray] # zufällige Auslosung der Farbe
     carco = random.choice(carrand)
 
-    # [Autonr. , parplatzNr. , Parkzeit Start, Parkzeit Ende, Dauer Parken Rest, Autofarbe]
-    car = [carnr, pplace, timem, timem + ptime,ptime,carco]
+    # [Autonr. , parkplatzNr. , Leer, Leer, Dauer Parken Rest, Autofarbe]
+    car = [carnr, pplace,0 ,0 ,ptime,carco]
     cars.append(car)
 
     return lpark
@@ -401,20 +411,19 @@ def clocks (dhm): #Minuten, Stunden und Tage werden erstellt/hochgezählt und in
     timem = dhm [2]
 
     timem += 1
-    if timem%60 == 0: #Minuten
-        timeh += 1
-
-    if timem % 1440 == 0: #Stunden
+    timeh += timem // 60
+    timem = timem % 60
+    if timeh >= 24:
         timeh = 0
-        timed += 1        #Tage
+        timed += 1
 
-    dhm = [timed,timeh,timem]
-    return(dhm)
+    dhm = [timed, timeh, timem]
+    return (dhm)
 
 def ptimecd_remvcar(sumo):
     q = 0                               # Variable zum durcharbeiten von cars
     codw = 0                            # Hilfsvariable zum herunterzaehlen der restlichen Parkzeit
-    hparked = 0                         # Stunden geparket in Stunden aufgerundet
+    hparked = 0                         # Stunden geparket in Stunden aufgerundet .
     if cars !=[]:
         for q in range (len(cars)):     # Parkdauer wird runtergezählt (für jedes Auto in liste cars)
             if cars[q] != [0]:
@@ -498,6 +507,8 @@ for c in range(len(aph)):
         c = c+1
         koordinate [c]=xy
 
+
+
 textsize = Parkingnr()
 
 clock = pygame.time.Clock()
@@ -565,6 +576,8 @@ while simrun == True: #While-Schleife für Simulation
 
         screen.blit(cars[ue][5], car_rect)
 
+
+
 #Ampel
     if len(lpark) == 0:
         screen.blit(STOOP, STOOP_rect)
@@ -611,11 +624,19 @@ while simrun == True: #While-Schleife für Simulation
     # Anzeige für Tag und Uhrzeit
     day = dhm[0]
     hour = dhm[1]
+    minute = dhm[2]
 
+    # Formatierung Uhrzeit
+    if hour < 10:
+        hour = "0" + str(hour)
+    if minute < 10:
+        minute = "0" + str(minute)
+    if day < 10:
+        day = "0" + str(day)
 
     text_day = font_output.render(f"Tag: {day}", True, (255, 255, 255))
     screen.blit(text_day, (10, 10))
-    text_time = font_output.render(f"Stunden: {hour}", True, (255, 255, 255))
+    text_time = font_output.render(f"Uhrzeit: {hour} : {minute} Uhr", True, (255, 255, 255))
     screen.blit(text_time, (10, 40))
 
     # Anzeige für die belegten Parkplätze
@@ -630,7 +651,8 @@ while simrun == True: #While-Schleife für Simulation
 
     # Anzeige des Umsatzes
 
-    text_turnover = font_output.render(f"Umsatz: {sumo}€", True, (255, 255, 255))
+    locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8') # Formatierung Umsatz (Euro)
+    text_turnover = font_output.render(f"Umsatz: {locale.currency(sumo, grouping=True)}", True, (255, 255, 255))
     screen.blit(text_turnover, (1275, 25))
 
     if drawText:
@@ -640,5 +662,5 @@ while simrun == True: #While-Schleife für Simulation
         screen.blit(nrText, textRect)
 
     pygame.display.update()
-    clock.tick(inp_velocity)
+    clock.tick(inp_velocity) #Anpassung Geschwindigkeit durch Angabe in Einstellungen (inp_velocity)
 
